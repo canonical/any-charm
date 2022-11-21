@@ -1,0 +1,20 @@
+# Copyright 2022 Canonical Ltd.
+# See LICENSE file for licensing details.
+
+get-relation-data:
+  description: Get relation data that are currently attached to this charm.
+rpc:
+  description: >
+    Invoke any method of the AnyCharm that the return value and arguments can be encoded in JSON. The AnyCharm can be
+    extended with any method using the src-overwrite config.
+  params:
+    method:
+      type: string
+    args:
+      description: A json encoded args list that will be used in the method invocation.
+      type: string
+      default: "[]"
+    kwargs:
+      description: A json encoded kwargs map that will be used in the method invocation.
+      type: string
+      default: "{}"

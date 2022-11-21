@@ -1,0 +1,51 @@
+# Copyright 2022 Canonical Ltd.
+# See LICENSE file for licensing details.
+
+options:
+  set-relation-data:
+    description: |
+      A yaml/json encoded string defines a list of relation data that will be set automatically when matched relation is established.
+      The schema of relation data is:
+        [
+          {
+            "relation": "<relation-name>",
+            "other_application_name: "<other-application-name>",
+            "application_data": {
+              "<application-data-key>": "<application-data-value>",
+              ...
+            },
+            "unit_data": {
+              "<unit-name>": {
+                "<unit-data-key>": "<unit-data-value>"
+                ...
+              },
+              ...
+            }
+          },
+          ...
+        ]
+    default: "[]"
+    type: string
+  src-overwrite:
+    description: |
+      A yaml/json encoded map of filenames and file contents that will write to the any-charm src directory before any charm event handling.
+      By overwriting the any_charm.py with a Python script that defines a class named AnyCharm inherited from the AnyCharm base, the any-charm behavior can be altered and extended.
+      The src directory has been added to the Python path, you can directly import any modules inside the src directory.
+      It's recommended to use this config with rpc action.
+      The charm.py is protected and can not be overwritten, and it's highly not recommended to overwrite any_charm_base.py.
+      Here's an example of overwriting the any_charm.py, you can use the rpc charm action to invoke the greeting method:
+        any_charm.py: |
+          from any_charm_base import AnyCharmBase
+          
+          class AnyCharm(AnyCharmBase):
+              def __init__(self, *args, **kwargs):
+                  super().__init__(*args, **kwargs)
+                  self.framework.observe(self.on.update_status, self.update_status)
+              
+              def update_status(self, event):
+                  print("Hello, World!")
+              
+              def greeting(self):
+                  return "Hello"
+    default: "{}"
+    type: string

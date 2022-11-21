@@ -1,0 +1,18 @@
+# Copyright 2022 Canonical Ltd.
+# See LICENSE file for licensing details.
+
+name: any-charm
+description: A charm used to test other charms.
+summary:  A charm used to test other charms.
+
+provides:
+  provide-any:
+    interface: any
+
+requires:
+  ingress:
+    interface: ingress
+  require-any:
+    interface: any
+  redis:
+    interface: redis
