@@ -8,14 +8,17 @@ Out-of-box, `any-charm` provides a `set-relation-data` config that can update an
 Also, there's `get-relation-data` action that can inspect all established relation data.
 
 ```python3
-async def test_redis(ops_test, run_action):
-    await ops_test.model.deploy("redis-k8s")
-    await ops_test.model.add_relation("any", "redis-k8s")
+    any_app_name = "any-redis"
+    await asyncio.gather(
+        ops_test.model.deploy("redis-k8s"),
+        ops_test.model.deploy(any_charm, application_name=any_app_name, series="jammy"),
+    )
+    await ops_test.model.add_relation(any_app_name, "redis-k8s")
     await ops_test.model.wait_for_idle(status="active")
 
     status = await ops_test.model.get_status()
     redis_address = status["applications"]["redis-k8s"]["units"]["redis-k8s/0"]["address"]
-    relation_data_provided_by_redis = (await run_action("any", "get-relation-data"))[
+    relation_data_provided_by_redis = (await run_action(any_app_name, "get-relation-data"))[
         "relation-data"
     ]
     assert json.loads(relation_data_provided_by_redis) == [
@@ -34,7 +37,8 @@ The `AnyCharm` can also be extended to alter the behavior of the `any-charm` by 
 All combined you can create any charm for your test purpose without boilerplate.
 
 ```python3
-async def test_ingress(ops_test, run_action):
+async def test_ingress(ops_test, any_charm, run_action):
+    any_app_name = "any-ingress"
     ingress_lib_url = "https://github.com/canonical/nginx-ingress-integrator-operator/raw/main/lib/charms/nginx_ingress_integrator/v0/ingress.py"
     ingress_lib = requests.get(ingress_lib_url, timeout=10).text
     any_charm_src_overwrite = {
@@ -59,36 +63,39 @@ async def test_ingress(ops_test, run_action):
         """
         ),
     }
-    await ops_test.model.applications["any"].set_config(
-        {"src-overwrite": json.dumps(any_charm_src_overwrite)}
+    await asyncio.gather(
+        ops_test.model.deploy("nginx-ingress-integrator", application_name="ingress", trust=True),
+        ops_test.model.deploy(
+            any_charm,
+            application_name=any_app_name,
+            series="jammy",
+            config={"src-overwrite": json.dumps(any_charm_src_overwrite)},
+        ),
     )
-    await ops_test.model.deploy("nginx-ingress-integrator", application_name="ingress", trust=True)
-    await ops_test.model.add_relation("any", "ingress:ingress")
+    await ops_test.model.add_relation(any_app_name, "ingress:ingress")
     await ops_test.model.wait_for_idle(status="active")
 
-    kubernetes.config.load_kube_config()
-    kube = kubernetes.client.NetworkingV1Api()
-    ingress_annotations = kube.read_namespaced_ingress(
-        "any-ingress", namespace=ops_test.model.name
-    ).metadata.annotations
-    assert "nginx.ingress.kubernetes.io/enable-modsecurity" not in ingress_annotations
-    assert "nginx.ingress.kubernetes.io/enable-owasp-modsecurity-crs" not in ingress_annotations
-    assert "nginx.ingress.kubernetes.io/modsecurity-snippet" not in ingress_annotations
-
     await run_action(
-        "any",
+        any_app_name,
         "rpc",
         method="update_ingress",
         kwargs=json.dumps({"ingress_config": {"owasp-modsecurity-crs": True}}),
     )
     await ops_test.model.wait_for_idle(status="active")
 
-    ingress_annotations = kube.read_namespaced_ingress(
-        "any-ingress", namespace=ops_test.model.name
-    ).metadata.annotations
-    assert ingress_annotations["nginx.ingress.kubernetes.io/enable-modsecurity"] == "true"
-    assert (
-        ingress_annotations["nginx.ingress.kubernetes.io/enable-owasp-modsecurity-crs"] == "true"
+    kubernetes.config.load_kube_config()
+    kube = kubernetes.client.NetworkingV1Api()
+
+    def get_ingress_annotation():
+        return kube.read_namespaced_ingress(
+            "any-ingress", namespace=ops_test.model.name
+        ).metadata.annotations
+
+    await ops_test.model.block_until(
+        lambda: "nginx.ingress.kubernetes.io/enable-modsecurity" in get_ingress_annotation(),
+        timeout=180,
+        wait_period=5,
     )
-    assert ingress_annotations["nginx.ingress.kubernetes.io/modsecurity-snippet"]
+    ingress_annotations = get_ingress_annotation()
+    assert ingress_annotations["nginx.ingress.kubernetes.io/enable-modsecurity"] == "true"
 ```

@@ -12,13 +12,11 @@ logger = logging.getLogger(__name__)
 
 
 @pytest.mark.abort_on_fail
-async def test_build_and_deploy(ops_test):
+async def test_deploy(ops_test, any_charm):
     """Build the charm-under-test and deploy it."""
-    # build and deploy charm from local source folder
-    charm = await ops_test.build_charm(".")
     await asyncio.gather(
-        ops_test.model.deploy(charm, application_name="this", series="focal"),
-        ops_test.model.deploy(charm, application_name="other", series="focal"),
+        ops_test.model.deploy(any_charm, application_name="this", series="jammy"),
+        ops_test.model.deploy(any_charm, application_name="other", series="jammy"),
     )
     await ops_test.model.wait_for_idle(status="active")
 

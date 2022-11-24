@@ -2,6 +2,7 @@
 # See LICENSE file for licensing details.
 
 import pytest
+import pytest_asyncio
 from pytest_operator.plugin import OpsTest
 
 
@@ -14,3 +15,8 @@ def run_action(ops_test: OpsTest):
         return action.results
 
     return _run_action
+
+
+@pytest_asyncio.fixture(scope="module")
+async def any_charm(ops_test: OpsTest):
+    return await ops_test.build_charm(".")
