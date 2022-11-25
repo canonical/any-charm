@@ -8,10 +8,11 @@ Out-of-box, `any-charm` provides a `set-relation-data` config that can update an
 Also, there's `get-relation-data` action that can inspect all established relation data.
 
 ```python3
+async def test_redis(ops_test, run_action):
     any_app_name = "any-redis"
     await asyncio.gather(
         ops_test.model.deploy("redis-k8s"),
-        ops_test.model.deploy(any_charm, application_name=any_app_name, series="jammy"),
+        ops_test.model.deploy("any-charm", application_name=any_app_name, channel="beta"),
     )
     await ops_test.model.add_relation(any_app_name, "redis-k8s")
     await ops_test.model.wait_for_idle(status="active")
@@ -37,7 +38,7 @@ The `AnyCharm` can also be extended to alter the behavior of the `any-charm` by 
 All combined you can create any charm for your test purpose without boilerplate.
 
 ```python3
-async def test_ingress(ops_test, any_charm, run_action):
+async def test_ingress(ops_test, run_action):
     any_app_name = "any-ingress"
     ingress_lib_url = "https://github.com/canonical/nginx-ingress-integrator-operator/raw/main/lib/charms/nginx_ingress_integrator/v0/ingress.py"
     ingress_lib = requests.get(ingress_lib_url, timeout=10).text
@@ -66,9 +67,9 @@ async def test_ingress(ops_test, any_charm, run_action):
     await asyncio.gather(
         ops_test.model.deploy("nginx-ingress-integrator", application_name="ingress", trust=True),
         ops_test.model.deploy(
-            any_charm,
+            "any-charm",
             application_name=any_app_name,
-            series="jammy",
+            channel="beta",
             config={"src-overwrite": json.dumps(any_charm_src_overwrite)},
         ),
     )
