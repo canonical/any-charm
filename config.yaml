@@ -2,30 +2,6 @@
 # See LICENSE file for licensing details.
 
 options:
-  set-relation-data:
-    description: |
-      A yaml/json encoded string defines a list of relation data that will be set automatically when matched relation is established.
-      The schema of relation data is:
-        [
-          {
-            "relation": "<relation-name>",
-            "other_application_name: "<other-application-name>",
-            "application_data": {
-              "<application-data-key>": "<application-data-value>",
-              ...
-            },
-            "unit_data": {
-              "<unit-name>": {
-                "<unit-data-key>": "<unit-data-value>"
-                ...
-              },
-              ...
-            }
-          },
-          ...
-        ]
-    default: "[]"
-    type: string
   src-overwrite:
     description: |
       A yaml/json encoded map of filenames and file contents that will write to the any-charm src directory before any charm event handling.

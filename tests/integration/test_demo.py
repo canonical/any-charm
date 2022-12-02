@@ -11,30 +11,6 @@ import requests
 logger = logging.getLogger(__name__)
 
 
-async def test_redis(ops_test, any_charm, run_action):
-    any_app_name = "any-redis"
-    await asyncio.gather(
-        ops_test.model.deploy("redis-k8s"),
-        ops_test.model.deploy(any_charm, application_name=any_app_name, series="jammy"),
-    )
-    await ops_test.model.add_relation(any_app_name, "redis-k8s")
-    await ops_test.model.wait_for_idle(status="active")
-
-    status = await ops_test.model.get_status()
-    redis_address = status["applications"]["redis-k8s"]["units"]["redis-k8s/0"]["address"]
-    relation_data_provided_by_redis = (await run_action(any_app_name, "get-relation-data"))[
-        "relation-data"
-    ]
-    assert json.loads(relation_data_provided_by_redis) == [
-        {
-            "relation": "redis",
-            "other_application_name": "redis-k8s",
-            "application_data": {},
-            "unit_data": {"redis-k8s/0": {"hostname": redis_address, "port": "6379"}},
-        }
-    ]
-
-
 async def test_ingress(ops_test, any_charm, run_action):
     any_app_name = "any-ingress"
     ingress_lib_url = "https://github.com/canonical/nginx-ingress-integrator-operator/raw/main/lib/charms/nginx_ingress_integrator/v0/ingress.py"

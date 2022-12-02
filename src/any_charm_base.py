@@ -9,7 +9,7 @@ from typing import Iterator
 
 import yaml
 from ops.charm import ActionEvent, CharmBase
-from ops.model import ActiveStatus, MaintenanceStatus, Relation
+from ops.model import ActiveStatus, Relation
 
 logger = logging.getLogger(__name__)
 
@@ -26,33 +26,15 @@ class AnyCharmBase(CharmBase):
         self.__relations = list(metadata["provides"]) + list(metadata["requires"])
         self.framework.observe(self.on.get_relation_data_action, self._get_relation_data_)
         self.framework.observe(self.on.rpc_action, self._rpc_)
-        self.framework.observe(self.on.config_changed, self._on_relation_changed_)
-        for relation in self.__relations:
-            self.framework.observe(self.on[relation].relation_changed, self._on_relation_changed_)
+        self.framework.observe(self.on.start, self._on_start_)
+
+    def _on_start_(self, event):
+        self.unit.status = ActiveStatus()
 
     def __relation_iter(self) -> Iterator[Relation]:
         for relation_name in self.__relations:
             for relation in self.model.relations[relation_name]:
                 yield relation
-
-    def _on_relation_changed_(self, _event):
-        self.unit.status = MaintenanceStatus()
-        set_relation_data_config = yaml.safe_load(self.model.config["set-relation-data"])
-        for relation in self.__relation_iter():
-            for set_relation in set_relation_data_config:
-                if relation.name != set_relation["relation"]:
-                    continue
-                if relation.app.name != set_relation["other_application_name"]:
-                    continue
-                app_data = set_relation.get("application_data", {})
-                for app_data_key, app_data_value in app_data.items():
-                    relation.data[self.app][app_data_key] = app_data_value
-                for unit_name, unit_data in set_relation.get("unit_data", {}).items():
-                    if self.unit.name != unit_name:
-                        continue
-                    for unit_data_key, unit_data_value in unit_data.items():
-                        relation.data[self.unit][unit_data_key] = unit_data_value
-        self.unit.status = ActiveStatus()
 
     @staticmethod
     def __extrack_relation_unit_data(relation: Relation):
