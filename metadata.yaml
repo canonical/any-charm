@@ -16,3 +16,5 @@ requires:
     interface: any
   redis:
     interface: redis
+  nginx-route:
+    interface: nginx-route
