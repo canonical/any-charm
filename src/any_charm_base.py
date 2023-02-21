@@ -36,11 +36,14 @@ class AnyCharmBase(CharmBase):
             for relation in self.model.relations[relation_name]:
                 yield relation
 
-    @staticmethod
-    def __extrack_relation_unit_data(relation: Relation):
+    def __extrack_relation_unit_data(self, relation: Relation):
         data = {}
         for unit in relation.units:
             data[unit.name] = dict(relation.data[unit])
+        for unit_idx in range(self.app.planned_units()):
+            unit_name = f"{self.app.name}/{unit_idx}"
+            unit = self.model.get_unit(unit_name)
+            data[unit_name] = dict(relation.data[unit])
         return data
 
     def _get_relation_data_(self, event):
@@ -51,7 +54,10 @@ class AnyCharmBase(CharmBase):
                     {
                         "relation": relation.name,
                         "other_application_name": relation.app.name,
-                        "application_data": dict(relation.data[relation.app]),
+                        "application_data": {
+                            self.app.name: dict(relation.data[self.app]),
+                            relation.app.name: dict(relation.data[relation.app]),
+                        },
                         "unit_data": self.__extrack_relation_unit_data(relation),
                     }
                 )
