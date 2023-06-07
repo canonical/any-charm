@@ -8,6 +8,12 @@ summary:  A charm used to test other charms.
 provides:
   provide-any:
     interface: any
+  provide-http:
+    interface: http
+
+peers:
+  peer-any:
+    interface: peer-any
 
 requires:
   ingress:
@@ -18,3 +24,5 @@ requires:
     interface: redis
   nginx-route:
     interface: nginx-route
+  require-http:
+    interface: http
