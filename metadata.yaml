@@ -26,3 +26,5 @@ requires:
     interface: nginx-route
   require-http:
     interface: http
+  saml:
+    interface: saml
