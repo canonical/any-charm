@@ -10,3 +10,17 @@ jobs:
   run-tests:
     name: Run Tests
     uses: ./.github/workflows/ci.yaml
+
+  publish-any-charm:
+    name: Publish any-charm
+    runs-on: ubuntu-latest
+    needs: [ run-tests ]
+    steps:
+      - name: Upload Charm to Charmhub
+        uses: actions/checkout@v4
+      - name: Upload Charm to Charmhub
+        uses: canonical/charming-actions/upload-charm@2.4.0
+        with:
+          credentials: ${{ secrets.CHARMHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          channel: latest/beta
