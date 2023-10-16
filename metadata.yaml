@@ -28,3 +28,7 @@ requires:
     interface: http
   saml:
     interface: saml
+  smtp:
+    interface: smtp
+  smtp-legacy:
+    interface: smtp
