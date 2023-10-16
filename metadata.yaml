@@ -29,6 +29,6 @@ requires:
   saml:
     interface: saml
   smtp:
-    interface: saml
+    interface: smtp
   smtp-legacy:
-    interface: saml
+    interface: smtp
