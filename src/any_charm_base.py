@@ -7,16 +7,15 @@ import json
 import logging
 from typing import Iterator
 
+import ops
 import yaml
-from ops.charm import ActionEvent, CharmBase
-from ops.model import ActiveStatus, Relation
 
 logger = logging.getLogger(__name__)
 
 __all__ = ["AnyCharmBase"]
 
 
-class AnyCharmBase(CharmBase):
+class AnyCharmBase(ops.CharmBase):
     """Charm the service."""
 
     def __init__(self, *args):
@@ -29,14 +28,14 @@ class AnyCharmBase(CharmBase):
         self.framework.observe(self.on.start, self._on_start_)
 
     def _on_start_(self, event):
-        self.unit.status = ActiveStatus()
+        self.unit.status = ops.ActiveStatus()
 
-    def __relation_iter(self) -> Iterator[Relation]:
+    def __relation_iter(self) -> Iterator[ops.Relation]:
         for relation_name in self.__relations:
             for relation in self.model.relations[relation_name]:
                 yield relation
 
-    def __extrack_relation_unit_data(self, relation: Relation):
+    def __extrack_relation_unit_data(self, relation: ops.Relation):
         data = {}
         for unit in relation.units:
             data[unit.name] = dict(relation.data[unit])
@@ -66,7 +65,7 @@ class AnyCharmBase(CharmBase):
             logger.exception("error while handling get-relation-data action")
             event.fail(repr(exc))
 
-    def _rpc_(self, event: ActionEvent):
+    def _rpc_(self, event: ops.ActionEvent):
         try:
             action_params = event.params
             method = action_params["method"]

@@ -95,3 +95,28 @@ async def test_overwrite_and_rpc_action(ops_test, run_action):
         kwargs=json.dumps(rpc_params["kwargs"]),
     )
     assert json.loads(results["return"]) == rpc_params
+
+
+async def test_recovery(ops_test, run_action):
+    overwrite_app_charm_script = textwrap.dedent(
+        """\
+    import ops
+    class AnyCharm(ops.CharmBase):
+        pass
+    """
+    )
+    await ops_test.model.applications["this"].set_config(
+        {
+            "src-overwrite": json.dumps(
+                {
+                    "any_charm.py": overwrite_app_charm_script,
+                    "any_charm_base.py": "",
+                }
+            )
+        }
+    )
+    await ops_test.model.wait_for_idle(status="active")
+    await ops_test.model.applications["this"].set_config({"src-overwrite": json.dumps({})})
+    await ops_test.model.wait_for_idle(status="active")
+    results = await run_action("this", "get-relation-data")
+    assert "relation-data" in results
