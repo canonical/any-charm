@@ -28,6 +28,9 @@ jobs:
   integration-test-microk8s:
     name: Integration tests (microk8s)
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        module: [ test_charm, test_demo, test_packages ]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,4 +40,4 @@ jobs:
           provider: microk8s
           channel: 1.29-strict/stable
       - name: Run integration tests
-        run: tox -e integration
+        run: tox -e integration -- -k ${{ matrix.module }}
