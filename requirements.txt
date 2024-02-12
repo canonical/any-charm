@@ -1,3 +1,5 @@
-ops
-charmhelpers
-pydantic ~= 2.0
+ops==2.10.0
+charmhelpers==1.2.1
+packaging==23.2
+pip==24.0
+pyyaml==6.0.1

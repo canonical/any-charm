@@ -1,4 +1,4 @@
-# Copyright 2022 Canonical Ltd.
+# Copyright 2024 Canonical Ltd.
 # See LICENSE file for licensing details.
 
 """The base class for AnyCharm to provide the default functionality of any-charm."""
@@ -18,8 +18,8 @@ __all__ = ["AnyCharmBase"]
 class AnyCharmBase(ops.CharmBase):
     """Charm the service."""
 
-    def __init__(self, *args):
-        super().__init__(*args)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         with open("metadata.yaml", encoding="utf-8") as metadata_fo:
             metadata = yaml.safe_load(metadata_fo)
         self.__relations = list(metadata["provides"]) + list(metadata["requires"])

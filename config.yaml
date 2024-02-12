@@ -1,4 +1,4 @@
-# Copyright 2022 Canonical Ltd.
+# Copyright 2024 Canonical Ltd.
 # See LICENSE file for licensing details.
 
 options:
@@ -12,16 +12,29 @@ options:
       Here's an example of overwriting the any_charm.py, you can use the rpc charm action to invoke the greeting method:
         any_charm.py: |
           from any_charm_base import AnyCharmBase
-          
+      
           class AnyCharm(AnyCharmBase):
               def __init__(self, *args, **kwargs):
                   super().__init__(*args, **kwargs)
                   self.framework.observe(self.on.update_status, self.update_status)
-              
+      
               def update_status(self, event):
                   print("Hello, World!")
-              
+      
               def greeting(self):
                   return "Hello"
     default: "{}"
+    type: string
+  python-packages:
+    description: >-
+      newline-separated Python packages list to install in any-charm. 
+      The configuration format is a subset of requirements.txt specification, with each line a dependency compliant with PEP 508.
+      Some commonly used packages in charms like pydantic are packed with the any-charm. 
+      Which means that if the local cached package version matches the requirement, the required package can be installed directly from the cache.
+      The full list of pre-packaged Python packages can be found within the any-charm source code, specifically in the wheelhouse.txt file. 
+      For better chances to match versions available in the local cache, don't specify or pin the exact package version. 
+      For example, prefer using `jsonschema` instead of `jsonschema==4.21.0`.
+      And for pre-packed Python packages with different versions like pydantic v1 and v2, only pin the major version `pydantic~=1.0`.
+      Packages installed via this configuration has the lowest priority during the Python module resolution process.
+    default: ""
     type: string
