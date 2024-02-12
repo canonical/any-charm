@@ -1,8 +1,8 @@
 # Copyright 2024 Canonical Ltd.
 # See LICENSE file for licensing details.
+
 import json
 
-import pytest
 import pytest_asyncio
 from pytest_operator.plugin import OpsTest
 

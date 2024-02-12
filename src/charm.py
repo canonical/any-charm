@@ -32,6 +32,7 @@ installed_python_packages = ""
 
 
 def self_modify_assign_value(symbol: str, value_repr: str):
+    """Search the source code for an assign statement and update its right value in the code."""
     source = THIS_FILE.read_text(encoding="utf-8")
     root = ast.parse(source)
     source_lines = source.splitlines(keepends=True)
@@ -60,6 +61,7 @@ def self_modify_assign_value(symbol: str, value_repr: str):
 
 
 def pip_install(requirements: str):
+    """Install Python dependencies listed in requirements."""
     install_wheelhouse = []
     install_pypi = []
     for line in requirements.splitlines():
@@ -109,6 +111,7 @@ def pip_install(requirements: str):
 
 
 def preserve_original():
+    """Save the original src file contents."""
     global original
     if not original:
         original = {
@@ -120,6 +123,7 @@ def preserve_original():
 
 
 def install_packages():
+    """Install required Python packages."""
     python_packages = hookenv.config("python-packages")
     if python_packages != installed_python_packages:
         shutil.rmtree(DYNAMIC_PACKAGES_PATH, ignore_errors=True)
@@ -131,6 +135,7 @@ def install_packages():
 
 
 def src_overwrite():
+    """Update the src file contents based on the charm configuration."""
     for src_overwrite_filename, src_overwrite_file_content in {
         **original,
         **yaml.safe_load(hookenv.config("src-overwrite")),

@@ -17,7 +17,7 @@ async def test_install_python_dependencies(ops_test, any_charm, run_rpc):
     any_charm_script = textwrap.dedent(
         """\
     from any_charm_base import AnyCharmBase
-    
+
     class AnyCharm(AnyCharmBase):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
@@ -25,7 +25,7 @@ async def test_install_python_dependencies(ops_test, any_charm, run_rpc):
         def pydantic_version(self):
             import pydantic
             return pydantic.VERSION
-        
+
         def requests_version(self):
             import requests
             return requests.__version__
