@@ -39,6 +39,7 @@ jobs:
         env:
           CHARMCRAFT_AUTH: ${{ secrets.CHARMHUB_TOKEN }}
         run: |
+          sudo snap install charmcraft --classic
           docker pull ubuntu:latest
           image_id=$(docker images ubuntu:latest --format "{{.ID}}")
           charmcraft upload-resource any-charm-k8s any-image --image=$image_id --verbosity=brief
