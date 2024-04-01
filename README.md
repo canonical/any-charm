@@ -37,7 +37,13 @@ async def test_ingress(ops_test, run_action):
         ),
     }
     await asyncio.gather(
-        ops_test.model.deploy("nginx-ingress-integrator", application_name="ingress", trust=True),
+        ops_test.model.deploy(
+            "nginx-ingress-integrator",
+            application_name="ingress",
+            channel="latest/stable",
+            revision=79,
+            trust=True,
+        ),
         ops_test.model.deploy(
             "any-charm",
             application_name=any_app_name,
@@ -65,10 +71,14 @@ async def test_ingress(ops_test, run_action):
         ).metadata.annotations
 
     await ops_test.model.block_until(
-        lambda: "nginx.ingress.kubernetes.io/enable-modsecurity" in get_ingress_annotation(),
+        lambda: "nginx.ingress.kubernetes.io/enable-modsecurity"
+        in get_ingress_annotation(),
         timeout=180,
         wait_period=5,
     )
     ingress_annotations = get_ingress_annotation()
-    assert ingress_annotations["nginx.ingress.kubernetes.io/enable-modsecurity"] == "true"
+    assert (
+        ingress_annotations["nginx.ingress.kubernetes.io/enable-modsecurity"] == "true"
+    )
+
 ```

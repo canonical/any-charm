@@ -38,7 +38,13 @@ async def test_ingress(ops_test, any_charm, run_action):
         ),
     }
     await asyncio.gather(
-        ops_test.model.deploy("nginx-ingress-integrator", application_name="ingress", trust=True),
+        ops_test.model.deploy(
+            "nginx-ingress-integrator",
+            application_name="ingress",
+            channel="latest/stable",
+            revision=79,
+            trust=True,
+        ),
         ops_test.model.deploy(
             any_charm,
             application_name=any_app_name,
