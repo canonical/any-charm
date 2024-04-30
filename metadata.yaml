@@ -36,3 +36,5 @@ requires:
     interface: ldap
   send-ca-cert:
     interface: certificate_transfer
+  dns-record:
+    interface: dns_record
