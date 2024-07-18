@@ -1,4 +1,4 @@
-ops==2.14.0
+ops==2.14.1
 charmhelpers==1.2.1
 packaging==23.2
 pip==24.1.2
