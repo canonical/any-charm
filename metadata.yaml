@@ -10,6 +10,8 @@ provides:
     interface: any
   provide-http:
     interface: http
+  provide-irc-bridge:
+    interface: irc_bridge
 
 peers:
   peer-any:
@@ -38,3 +40,5 @@ requires:
     interface: certificate_transfer
   dns-record:
     interface: dns_record
+  require-irc-bridge:
+    interface: irc_bridge
