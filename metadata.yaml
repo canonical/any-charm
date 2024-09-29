@@ -12,6 +12,8 @@ provides:
     interface: http
   provide-irc-bridge:
     interface: irc_bridge
+  require-cloudflared-route:
+    interface: cloudflared-route
 
 peers:
   peer-any:
@@ -42,3 +44,5 @@ requires:
     interface: dns_record
   require-irc-bridge:
     interface: irc_bridge
+  require-cloudflared-route:
+    interface: cloudflared-route
