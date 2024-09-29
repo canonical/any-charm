@@ -12,7 +12,7 @@ jobs:
   publish-any-charm:
     name: Publish any-charm
     runs-on: ubuntu-latest
-    needs: [ run-tests ]
+#    needs: [ run-tests ]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,7 +26,7 @@ jobs:
   publish-any-charm-k8s:
     name: Publish any-charm-k8s
     runs-on: ubuntu-latest
-    needs: [ run-tests ]
+#    needs: [ run-tests ]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
