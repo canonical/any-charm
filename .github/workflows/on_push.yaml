@@ -23,6 +23,20 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           channel: latest/beta
 
+  publish-any-charm-arm64:
+    name: Publish any-charm
+    runs-on: arm64
+    needs: [ run-tests ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Upload Charm to Charmhub
+        uses: canonical/charming-actions/upload-charm@2.4.0
+        with:
+          credentials: ${{ secrets.CHARMHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          channel: latest/beta
+
   publish-any-charm-k8s:
     name: Publish any-charm-k8s
     runs-on: ubuntu-latest
