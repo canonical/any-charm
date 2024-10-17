@@ -48,3 +48,29 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           channel: latest/beta
           tag-prefix: any-charm-k8s
+
+  publish-any-charm-k8s-arm64:
+    name: Publish any-charm-k8s arm64
+    runs-on: arm64
+    needs: [ run-tests ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Update metadata.yaml
+        run: |
+          yq eval '.name = "any-charm-k8s"' --inplace metadata.yaml
+          yq eval '.containers = {"any": {"resource": "any-image"}}' --inplace metadata.yaml
+          yq eval '.resources = {
+            "any-image": {
+              "type": "oci-image",
+              "description": "Any OCI image",
+              "upstream-source": "ubuntu:latest"
+            }
+          }' --inplace metadata.yaml
+      - name: Upload Charm to Charmhub
+        uses: canonical/charming-actions/upload-charm@2.4.0
+        with:
+          credentials: ${{ secrets.CHARMHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          channel: latest/beta
+          tag-prefix: any-charm-k8s
