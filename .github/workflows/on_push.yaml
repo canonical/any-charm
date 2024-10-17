@@ -24,8 +24,8 @@ jobs:
           channel: latest/beta
 
   publish-any-charm-arm64:
-    name: Publish any-charm
-    runs-on: arm64
+    name: Publish any-charm arm64
+    runs-on: [arm64, jammy]
     needs: [ run-tests ]
     steps:
       - name: Checkout
@@ -65,7 +65,7 @@ jobs:
 
   publish-any-charm-k8s-arm64:
     name: Publish any-charm-k8s arm64
-    runs-on: arm64
+    runs-on: [arm64, jammy]
     needs: [ run-tests ]
     steps:
       - name: Checkout
