@@ -46,3 +46,5 @@ requires:
     interface: irc_bridge
   require-cloudflared-route:
     interface: cloudflared-route
+  matrix-auth:
+    interface: matrix_auth
