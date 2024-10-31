@@ -59,3 +59,4 @@ async def test_install_python_dependencies(ops_test, any_charm, run_rpc):
     requests_version = await run_rpc(name, "rpc", method="requests_version")
     assert requests_version == "2.32.2"
     _, debug_log, _ = await ops_test.juju("debug-log", "--replay")
+    assert debug_log.count("installing python packages ['requests==2.32.2'] from pypi") == 1
