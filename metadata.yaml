@@ -16,6 +16,8 @@ provides:
     interface: cloudflared-route
   provide-matrix-auth:
     interface: matrix_auth
+  provide-logging:
+    interface: loki_push_api
 
 peers:
   peer-any:
@@ -50,3 +52,5 @@ requires:
     interface: cloudflared-route
   require-matrix-auth:
     interface: matrix_auth
+  require-grafana-dashboard:
+    interface: grafana_dashboard
