@@ -18,6 +18,10 @@ provides:
     interface: matrix_auth
   provide-logging:
     interface: loki_push_api
+  sdcore_config:
+    interface: sdcore_config
+  fiveg_core_gnb:
+    interface: fiveg_core_gnb
 
 peers:
   peer-any:
