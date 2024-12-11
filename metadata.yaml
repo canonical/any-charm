@@ -22,6 +22,8 @@ provides:
     interface: sdcore_config
   provide-fiveg-core-gnb:
     interface: fiveg_core_gnb
+  provide-fiveg-n2:
+    interface: fiveg_n2
 
 peers:
   peer-any:
