@@ -60,3 +60,5 @@ requires:
     interface: matrix_auth
   require-grafana-dashboard:
     interface: grafana_dashboard
+  require-haproxy-route:
+    interface: haproxy-route
