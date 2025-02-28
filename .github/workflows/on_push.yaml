@@ -11,13 +11,13 @@ jobs:
 
   publish-any-charm:
     name: Publish any-charm
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [ run-tests ]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Upload Charm to Charmhub
-        uses: canonical/charming-actions/upload-charm@2.6.3
+        uses: canonical/charming-actions/upload-charm@2.7.0
         with:
           credentials: ${{ secrets.CHARMHUB_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -31,7 +31,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Upload Charm to Charmhub
-        uses: canonical/charming-actions/upload-charm@2.6.3
+        uses: canonical/charming-actions/upload-charm@2.7.0
         with:
           credentials: ${{ secrets.CHARMHUB_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -39,7 +39,7 @@ jobs:
 
   publish-any-charm-k8s:
     name: Publish any-charm-k8s
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [ run-tests ]
     steps:
       - name: Checkout
@@ -56,7 +56,7 @@ jobs:
             }
           }' --inplace metadata.yaml
       - name: Upload Charm to Charmhub
-        uses: canonical/charming-actions/upload-charm@2.6.3
+        uses: canonical/charming-actions/upload-charm@2.7.0
         with:
           credentials: ${{ secrets.CHARMHUB_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -82,7 +82,7 @@ jobs:
             }
           }' --inplace metadata.yaml
       - name: Upload Charm to Charmhub
-        uses: canonical/charming-actions/upload-charm@2.6.3
+        uses: canonical/charming-actions/upload-charm@2.7.0
         with:
           credentials: ${{ secrets.CHARMHUB_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
