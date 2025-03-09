@@ -11,7 +11,7 @@ jobs:
 
   publish-any-charm:
     name: Publish any-charm
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [ run-tests ]
     steps:
       - name: Checkout
@@ -39,7 +39,7 @@ jobs:
 
   publish-any-charm-k8s:
     name: Publish any-charm-k8s
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [ run-tests ]
     steps:
       - name: Checkout
