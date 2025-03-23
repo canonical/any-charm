@@ -1,3 +1,4 @@
 pydantic==2.6.1
 pydantic==1.10.14
 jsonschema==4.21.1
+requests==2.32.3
