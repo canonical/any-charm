@@ -536,6 +536,8 @@ requires:
     interface: redis
   nginx-route:
     interface: nginx-route
+  saml:
+    interface: saml
   smtp:
     interface: smtp
   smtp-legacy:
