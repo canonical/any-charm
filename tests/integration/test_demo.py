@@ -72,12 +72,9 @@ async def test_ingress(ops_test, any_charm, run_action):
         ).metadata.annotations
 
     await ops_test.model.block_until(
-        lambda: "nginx.ingress.kubernetes.io/enable-modsecurity"
-        in get_ingress_annotation(),
+        lambda: "nginx.ingress.kubernetes.io/enable-modsecurity" in get_ingress_annotation(),
         timeout=180,
         wait_period=5,
     )
     ingress_annotations = get_ingress_annotation()
-    assert (
-        ingress_annotations["nginx.ingress.kubernetes.io/enable-modsecurity"] == "true"
-    )
+    assert ingress_annotations["nginx.ingress.kubernetes.io/enable-modsecurity"] == "true"
