@@ -5,43 +5,537 @@ name: any-charm
 description: A charm used to test other charms.
 summary:  A charm used to test other charms.
 
-provides:
-  provide-any:
-    interface: any
-  provide-http:
-    interface: http
-  provide-irc-bridge:
-    interface: irc_bridge
-  provide-cloudflared-route:
-    interface: cloudflared-route
-  provide-matrix-auth:
-    interface: matrix_auth
-  provide-logging:
-    interface: loki_push_api
-  provide-sdcore-config:
-    interface: sdcore_config
-  provide-fiveg-core-gnb:
-    interface: fiveg_core_gnb
-  provide-fiveg-n2:
-    interface: fiveg_n2
-  provide-http-proxy:
-    interface: http_proxy
 
 peers:
   peer-any:
     interface: peer-any
-
+provides:
+  provide-aar:
+    interface: aar
+  provide-agent-auth:
+    interface: agent-auth
+  provide-airbyte-server:
+    interface: airbyte-server
+  provide-alertmanager-dispatch:
+    interface: alertmanager_dispatch
+  provide-alertmanager-remote-configuration:
+    interface: alertmanager_remote_configuration
+  provide-anbox-stream-gateway:
+    interface: anbox-stream-gateway
+  provide-any:
+    interface: any
+  provide-apache-vhost-config:
+    interface: apache-vhost-config
+  provide-apache-website:
+    interface: apache-website
+  provide-arangodb:
+    interface: arangodb
+  provide-auth-proxy:
+    interface: auth_proxy
+  provide-autoscaling:
+    interface: autoscaling
+  provide-aws-iam:
+    interface: aws-iam
+  provide-aws-integration:
+    interface: aws-integration
+  provide-azure-integration:
+    interface: azure-integration
+  provide-barbican-hsm:
+    interface: barbican-hsm
+  provide-barbican-secrets:
+    interface: barbican-secrets
+  provide-baremetal:
+    interface: baremetal
+  provide-bgp:
+    interface: bgp
+  provide-bind-rndc:
+    interface: bind-rndc
+  provide-block-storage:
+    interface: block-storage
+  provide-cassandra:
+    interface: cassandra
+  provide-catalogue:
+    interface: catalogue
+  provide-ceilometer:
+    interface: ceilometer
+  provide-ceph-admin:
+    interface: ceph-admin
+  provide-ceph-bootstrap:
+    interface: ceph-bootstrap
+  provide-ceph-client:
+    interface: ceph-client
+  provide-ceph-dashboard:
+    interface: ceph-dashboard
+  provide-ceph-iscsi-admin-access:
+    interface: ceph-iscsi-admin-access
+  provide-ceph-mds:
+    interface: ceph-mds
+  provide-ceph-osd:
+    interface: ceph-osd
+  provide-ceph-radosgw:
+    interface: ceph-radosgw
+  provide-ceph-rbd-mirror:
+    interface: ceph-rbd-mirror
+  provide-certificate-transfer:
+    interface: certificate_transfer
+  provide-cinder:
+    interface: cinder
+  provide-cinder-backend:
+    interface: cinder-backend
+  provide-cinder-backup:
+    interface: cinder-backup
+  provide-cinder-ceph-key:
+    interface: cinder-ceph-key
+  provide-cinder-gw:
+    interface: cinder-gw
+  provide-cinder-nedge:
+    interface: cinder-nedge
+  provide-cloudflared-route:
+    interface: cloudflared-route
+  provide-config-server:
+    interface: config-server
+  provide-container-runtime:
+    interface: container-runtime
+  provide-containerd:
+    interface: containerd
+  provide-containers:
+    interface: containers
+  provide-cos-agent:
+    interface: cos_agent
+  provide-cos-k8s-tokens:
+    interface: cos-k8s-tokens
+  provide-dashboard:
+    interface: dashboard
+  provide-dashboard-plugin:
+    interface: dashboard-plugin
+  provide-db:
+    interface: db
+  provide-db2:
+    interface: db2
+  provide-designate:
+    interface: designate
+  provide-dex-oidc-config:
+    interface: dex-oidc-config
+  provide-dns-record:
+    interface: dns_record
+  provide-docker-registry:
+    interface: docker-registry
+  provide-dockerhost:
+    interface: dockerhost
+  provide-elastic-beats:
+    interface: elastic-beats
+  provide-elasticsearch:
+    interface: elasticsearch
+  provide-elasticsearch-datastore:
+    interface: elasticsearch-datastore
+  provide-ephemeral-backend:
+    interface: ephemeral-backend
+  provide-etcd:
+    interface: etcd
+  provide-etcd-proxy:
+    interface: etcd-proxy
+  provide-event-service:
+    interface: event-service
+  provide-external-cloud-provider:
+    interface: external_cloud_provider
+  provide-external-provider:
+    interface: external_provider
+  provide-fiveg-core-gnb:
+    interface: fiveg_core_gnb
+  provide-fiveg-n2:
+    interface: fiveg_n2
+  provide-fluentbit:
+    interface: fluentbit
+  provide-forward-auth:
+    interface: forward_auth
+  provide-ftn-compiler:
+    interface: ftn-compiler
+  provide-gcp-integration:
+    interface: gcp-integration
+  provide-generic-ip-port-user-pass:
+    interface: generic-ip-port-user-pass
+  provide-giraph:
+    interface: giraph
+  provide-glance:
+    interface: glance
+  provide-glance-backend:
+    interface: glance-backend
+  provide-glance-simplestreams-sync:
+    interface: glance-simplestreams-sync
+  provide-glauth-auxiliary:
+    interface: glauth_auxiliary
+  provide-gnocchi:
+    interface: gnocchi
+  provide-grafana-auth:
+    interface: grafana_auth
+  provide-grafana-cloud-config:
+    interface: grafana_cloud_config
+  provide-grafana-dashboard:
+    interface: grafana_dashboard
+  provide-grafana-datasource:
+    interface: grafana_datasource
+  provide-grafana-datasource-exchange:
+    interface: grafana_datasource_exchange
+  provide-grafana-metadata:
+    interface: grafana_metadata
+  provide-grafana-source:
+    interface: grafana-source
+  provide-guacd:
+    interface: guacd
+  provide-hacluster:
+    interface: hacluster
+  provide-haproxy-route:
+    interface: haproxy-route
+  provide-heat-plugin-subordinate:
+    interface: heat-plugin-subordinate
+  provide-http:
+    interface: http
+  provide-http-proxy:
+    interface: http_proxy
+  provide-httpd:
+    interface: httpd
+  provide-hydra-endpoints:
+    interface: hydra_endpoints
+  provide-influxdb-api:
+    interface: influxdb-api
+  provide-infoblox:
+    interface: infoblox
+  provide-ingress:
+    interface: ingress
+  provide-ingress-auth:
+    interface: ingress-auth
+  provide-ingress-per-unit:
+    interface: ingress_per_unit
+  provide-irc-bridge:
+    interface: irc_bridge
+  provide-istio-gateway-info:
+    interface: istio-gateway-info
+  provide-java:
+    interface: java
+  provide-jenkins-agent-v0:
+    interface: jenkins_agent_v0
+  provide-jenkins-extension:
+    interface: jenkins-extension
+  provide-jenkins-slave:
+    interface: jenkins-slave
+  provide-k8s-cluster:
+    interface: k8s-cluster
+  provide-k8s-service:
+    interface: k8s-service
+  provide-kafka:
+    interface: kafka
+  provide-kafka-client:
+    interface: kafka_client
+  provide-kapacitor:
+    interface: kapacitor
+  provide-karma-dashboard:
+    interface: karma_dashboard
+  provide-keystone:
+    interface: keystone
+  provide-keystone-admin:
+    interface: keystone-admin
+  provide-keystone-credentials:
+    interface: keystone-credentials
+  provide-keystone-domain-backend:
+    interface: keystone-domain-backend
+  provide-keystone-fid-service-provider:
+    interface: keystone-fid-service-provider
+  provide-keystone-middleware:
+    interface: keystone-middleware
+  provide-keystone-notifications:
+    interface: keystone-notifications
+  provide-kratos-info:
+    interface: kratos_info
+  provide-kube-control:
+    interface: kube-control
+  provide-kube-dns:
+    interface: kube-dns
+  provide-kubeflow-dashboard-links:
+    interface: kubeflow_dashboard_links
+  provide-kubernetes-cni:
+    interface: kubernetes-cni
+  provide-kubernetes-info:
+    interface: kubernetes-info
+  provide-landscape-hosted:
+    interface: landscape-hosted
+  provide-ldap:
+    interface: ldap
+  provide-livepatch-pro-airgapped-server:
+    interface: livepatch-pro-airgapped-server
+  provide-lldp:
+    interface: lldp
+  provide-loadbalancer:
+    interface: loadbalancer
+  provide-local-monitors:
+    interface: local-monitors
+  provide-login-ui-endpoints:
+    interface: login_ui_endpoints
+  provide-logs:
+    interface: logs
+  provide-logstash-client:
+    interface: logstash-client
+  provide-loki-push-api:
+    interface: loki_push_api
+  provide-lte-core:
+    interface: lte-core
+  provide-lxd:
+    interface: lxd
+  provide-lxd-bgp:
+    interface: lxd-bgp
+  provide-lxd-dns:
+    interface: lxd-dns
+  provide-lxd-https:
+    interface: lxd-https
+  provide-lxd-metrics:
+    interface: lxd-metrics
+  provide-magma-orchestrator:
+    interface: magma-orchestrator
+  provide-manila-plugin:
+    interface: manila-plugin
+  provide-matrix-auth:
+    interface: matrix_auth
+  provide-memcache:
+    interface: memcache
+  provide-midonet:
+    interface: midonet
+  provide-mongodb:
+    interface: mongodb
+  provide-mongodb-client:
+    interface: mongodb_client
+  provide-monitor:
+    interface: monitor
+  provide-monitors:
+    interface: monitors
+  provide-mount:
+    interface: mount
+  provide-munin-node:
+    interface: munin-node
+  provide-mysql:
+    interface: mysql
+  provide-mysql-async:
+    interface: mysql_async
+  provide-mysql-async-replication:
+    interface: mysql-async-replication
+  provide-mysql-client:
+    interface: mysql_client
+  provide-mysql-monitor:
+    interface: mysql-monitor
+  provide-mysql-root:
+    interface: mysql-root
+  provide-mysql-router:
+    interface: mysql-router
+  provide-mysql-shared:
+    interface: mysql-shared
+  provide-nats:
+    interface: nats
+  provide-nedge:
+    interface: nedge
+  provide-neutron-api:
+    interface: neutron-api
+  provide-neutron-load-balancer:
+    interface: neutron-load-balancer
+  provide-neutron-plugin:
+    interface: neutron-plugin
+  provide-neutron-plugin-api:
+    interface: neutron-plugin-api
+  provide-neutron-plugin-api-subordinate:
+    interface: neutron-plugin-api-subordinate
+  provide-nginx-route:
+    interface: nginx-route
+  provide-nova:
+    interface: nova
+  provide-nova-ceilometer:
+    interface: nova-ceilometer
+  provide-nova-cell:
+    interface: nova-cell
+  provide-nova-compute:
+    interface: nova-compute
+  provide-nova-vgpu:
+    interface: nova-vgpu
+  provide-nova-vmware:
+    interface: nova-vmware
+  provide-nrpe:
+    interface: nrpe
+  provide-nrpe-external-master:
+    interface: nrpe-external-master
+  provide-ntp:
+    interface: ntp
+  provide-oathkeeper-info:
+    interface: oathkeeper_info
+  provide-oauth:
+    interface: oauth
+  provide-object-storage:
+    interface: object-storage
+  provide-odl-controller-api:
+    interface: odl-controller-api
+  provide-oidc-client:
+    interface: oidc-client
+  provide-openfga:
+    interface: openfga
+  provide-opensearch-client:
+    interface: opensearch_client
+  provide-openstack-integration:
+    interface: openstack-integration
+  provide-openstack-loadbalancer:
+    interface: openstack-loadbalancer
+  provide-ovsdb:
+    interface: ovsdb
+  provide-ovsdb-cluster:
+    interface: ovsdb-cluster
+  provide-ovsdb-cms:
+    interface: ovsdb-cms
+  provide-ovsdb-manager:
+    interface: ovsdb-manager
+  provide-ovsdb-subordinate:
+    interface: ovsdb-subordinate
+  provide-pacemaker-remote:
+    interface: pacemaker-remote
+  provide-parca-scrape:
+    interface: parca_scrape
+  provide-parca-store:
+    interface: parca_store
+  provide-peer-cluster:
+    interface: peer_cluster
+  provide-pgsql:
+    interface: pgsql
+  provide-placement:
+    interface: placement
+  provide-pod-defaults:
+    interface: pod-defaults
+  provide-postfix-metrics:
+    interface: postfix-metrics
+  provide-postgresql-async:
+    interface: postgresql_async
+  provide-postgresql-client:
+    interface: postgresql_client
+  provide-prolog-epilog:
+    interface: prolog-epilog
+  provide-prometheus:
+    interface: prometheus
+  provide-prometheus-manual:
+    interface: prometheus-manual
+  provide-prometheus-remote-write:
+    interface: prometheus_remote_write
+  provide-prometheus-rules:
+    interface: prometheus-rules
+  provide-prometheus-scrape:
+    interface: prometheus_scrape
+  provide-public-address:
+    interface: public-address
+  provide-quantum:
+    interface: quantum
+  provide-rabbitmq:
+    interface: rabbitmq
+  provide-radosgw-multisite:
+    interface: radosgw-multisite
+  provide-radosgw-user:
+    interface: radosgw-user
+  provide-ranger-client:
+    interface: ranger_client
+  provide-redis:
+    interface: redis
+  provide-register-application:
+    interface: register-application
+  provide-rest:
+    interface: rest
+  provide-s3:
+    interface: s3
+  provide-saml:
+    interface: saml
+  provide-script-provider:
+    interface: script-provider
+  provide-sdcore-config:
+    interface: sdcore_config
+  provide-sdn-plugin:
+    interface: sdn-plugin
+  provide-secrets:
+    interface: secrets
+  provide-sentry-metrics:
+    interface: sentry-metrics
+  provide-service-control:
+    interface: service-control
+  provide-service-mesh:
+    interface: service-mesh
+  provide-shards:
+    interface: shards
+  provide-slurmd:
+    interface: slurmd
+  provide-slurmdbd:
+    interface: slurmdbd
+  provide-slurmrestd:
+    interface: slurmrestd
+  provide-smtp:
+    interface: smtp
+  provide-squid-auth-helper:
+    interface: squid-auth-helper
+  provide-ssl-termination:
+    interface: ssl-termination
+  provide-statistics:
+    interface: statistics
+  provide-stun-server:
+    interface: stun-server
+  provide-swift:
+    interface: swift
+  provide-swift-global-cluster:
+    interface: swift-global-cluster
+  provide-swift-gw:
+    interface: swift-gw
+  provide-swift-proxy:
+    interface: swift-proxy
+  provide-syslog:
+    interface: syslog
+  provide-telegraf-exec:
+    interface: telegraf-exec
+  provide-temporal:
+    interface: temporal
+  provide-thruk-agent:
+    interface: thruk-agent
+  provide-tls-certificates:
+    interface: tls-certificates
+  provide-tokens:
+    interface: tokens
+  provide-tracing:
+    interface: tracing
+  provide-traefik-route:
+    interface: traefik_route
+  provide-trino-client:
+    interface: trino_client
+  provide-ubuntu:
+    interface: ubuntu
+  provide-udldap-userdata:
+    interface: udldap-userdata
+  provide-untrusted-container-runtime:
+    interface: untrusted-container-runtime
+  provide-user-group:
+    interface: user-group
+  provide-vault-autounseal:
+    interface: vault-autounseal
+  provide-vault-kv:
+    interface: vault-kv
+  provide-vsd-rest-api:
+    interface: vsd-rest-api
+  provide-vsphere-integration:
+    interface: vsphere-integration
+  provide-web-publish:
+    interface: web-publish
+  provide-websso-fid-service-provider:
+    interface: websso-fid-service-provider
+  provide-websso-trusted-dashboard:
+    interface: websso-trusted-dashboard
+  provide-xlc-compiler:
+    interface: xlc-compiler
+  provide-zookeeper:
+    interface: zookeeper
+  provide-zuul:
+    interface: zuul
 requires:
+  # for backwards compatibility
   ingress:
     interface: ingress
-  require-any:
-    interface: any
   redis:
     interface: redis
   nginx-route:
     interface: nginx-route
-  require-http:
-    interface: http
   saml:
     interface: saml
   smtp:
@@ -54,15 +548,521 @@ requires:
     interface: certificate_transfer
   dns-record:
     interface: dns_record
-  require-irc-bridge:
-    interface: irc_bridge
+  require-aar:
+    interface: aar
+  require-agent-auth:
+    interface: agent-auth
+  require-airbyte-server:
+    interface: airbyte-server
+  require-alertmanager-dispatch:
+    interface: alertmanager_dispatch
+  require-alertmanager-remote-configuration:
+    interface: alertmanager_remote_configuration
+  require-anbox-stream-gateway:
+    interface: anbox-stream-gateway
+  require-any:
+    interface: any
+  require-apache-vhost-config:
+    interface: apache-vhost-config
+  require-apache-website:
+    interface: apache-website
+  require-arangodb:
+    interface: arangodb
+  require-auth-proxy:
+    interface: auth_proxy
+  require-autoscaling:
+    interface: autoscaling
+  require-aws-iam:
+    interface: aws-iam
+  require-aws-integration:
+    interface: aws-integration
+  require-azure-integration:
+    interface: azure-integration
+  require-barbican-hsm:
+    interface: barbican-hsm
+  require-barbican-secrets:
+    interface: barbican-secrets
+  require-baremetal:
+    interface: baremetal
+  require-bgp:
+    interface: bgp
+  require-bind-rndc:
+    interface: bind-rndc
+  require-block-storage:
+    interface: block-storage
+  require-cassandra:
+    interface: cassandra
+  require-catalogue:
+    interface: catalogue
+  require-ceilometer:
+    interface: ceilometer
+  require-ceph-admin:
+    interface: ceph-admin
+  require-ceph-bootstrap:
+    interface: ceph-bootstrap
+  require-ceph-client:
+    interface: ceph-client
+  require-ceph-dashboard:
+    interface: ceph-dashboard
+  require-ceph-iscsi-admin-access:
+    interface: ceph-iscsi-admin-access
+  require-ceph-mds:
+    interface: ceph-mds
+  require-ceph-osd:
+    interface: ceph-osd
+  require-ceph-radosgw:
+    interface: ceph-radosgw
+  require-ceph-rbd-mirror:
+    interface: ceph-rbd-mirror
+  require-certificate-transfer:
+    interface: certificate_transfer
+  require-cinder:
+    interface: cinder
+  require-cinder-backend:
+    interface: cinder-backend
+  require-cinder-backup:
+    interface: cinder-backup
+  require-cinder-ceph-key:
+    interface: cinder-ceph-key
+  require-cinder-gw:
+    interface: cinder-gw
+  require-cinder-nedge:
+    interface: cinder-nedge
   require-cloudflared-route:
     interface: cloudflared-route
-  require-matrix-auth:
-    interface: matrix_auth
+  require-config-server:
+    interface: config-server
+  require-container-runtime:
+    interface: container-runtime
+  require-containerd:
+    interface: containerd
+  require-containers:
+    interface: containers
+  require-cos-agent:
+    interface: cos_agent
+  require-cos-k8s-tokens:
+    interface: cos-k8s-tokens
+  require-dashboard:
+    interface: dashboard
+  require-dashboard-plugin:
+    interface: dashboard-plugin
+  require-db:
+    interface: db
+  require-db2:
+    interface: db2
+  require-designate:
+    interface: designate
+  require-dex-oidc-config:
+    interface: dex-oidc-config
+  require-dns-record:
+    interface: dns_record
+  require-docker-registry:
+    interface: docker-registry
+  require-dockerhost:
+    interface: dockerhost
+  require-elastic-beats:
+    interface: elastic-beats
+  require-elasticsearch:
+    interface: elasticsearch
+  require-elasticsearch-datastore:
+    interface: elasticsearch-datastore
+  require-ephemeral-backend:
+    interface: ephemeral-backend
+  require-etcd:
+    interface: etcd
+  require-etcd-proxy:
+    interface: etcd-proxy
+  require-event-service:
+    interface: event-service
+  require-external-cloud-provider:
+    interface: external_cloud_provider
+  require-external-provider:
+    interface: external_provider
+  require-fiveg-core-gnb:
+    interface: fiveg_core_gnb
+  require-fiveg-n2:
+    interface: fiveg_n2
+  require-fluentbit:
+    interface: fluentbit
+  require-forward-auth:
+    interface: forward_auth
+  require-ftn-compiler:
+    interface: ftn-compiler
+  require-gcp-integration:
+    interface: gcp-integration
+  require-generic-ip-port-user-pass:
+    interface: generic-ip-port-user-pass
+  require-giraph:
+    interface: giraph
+  require-glance:
+    interface: glance
+  require-glance-backend:
+    interface: glance-backend
+  require-glance-simplestreams-sync:
+    interface: glance-simplestreams-sync
+  require-glauth-auxiliary:
+    interface: glauth_auxiliary
+  require-gnocchi:
+    interface: gnocchi
+  require-grafana-auth:
+    interface: grafana_auth
+  require-grafana-cloud-config:
+    interface: grafana_cloud_config
   require-grafana-dashboard:
     interface: grafana_dashboard
+  require-grafana-datasource:
+    interface: grafana_datasource
+  require-grafana-datasource-exchange:
+    interface: grafana_datasource_exchange
+  require-grafana-metadata:
+    interface: grafana_metadata
+  require-grafana-source:
+    interface: grafana-source
+  require-guacd:
+    interface: guacd
+  require-hacluster:
+    interface: hacluster
   require-haproxy-route:
     interface: haproxy-route
+  require-heat-plugin-subordinate:
+    interface: heat-plugin-subordinate
+  require-http:
+    interface: http
   require-http-proxy:
     interface: http_proxy
+  require-httpd:
+    interface: httpd
+  require-hydra-endpoints:
+    interface: hydra_endpoints
+  require-influxdb-api:
+    interface: influxdb-api
+  require-infoblox:
+    interface: infoblox
+  require-ingress:
+    interface: ingress
+  require-ingress-auth:
+    interface: ingress-auth
+  require-ingress-per-unit:
+    interface: ingress_per_unit
+  require-irc-bridge:
+    interface: irc_bridge
+  require-istio-gateway-info:
+    interface: istio-gateway-info
+  require-java:
+    interface: java
+  require-jenkins-agent-v0:
+    interface: jenkins_agent_v0
+  require-jenkins-extension:
+    interface: jenkins-extension
+  require-jenkins-slave:
+    interface: jenkins-slave
+  require-k8s-cluster:
+    interface: k8s-cluster
+  require-k8s-service:
+    interface: k8s-service
+  require-kafka:
+    interface: kafka
+  require-kafka-client:
+    interface: kafka_client
+  require-kapacitor:
+    interface: kapacitor
+  require-karma-dashboard:
+    interface: karma_dashboard
+  require-keystone:
+    interface: keystone
+  require-keystone-admin:
+    interface: keystone-admin
+  require-keystone-credentials:
+    interface: keystone-credentials
+  require-keystone-domain-backend:
+    interface: keystone-domain-backend
+  require-keystone-fid-service-provider:
+    interface: keystone-fid-service-provider
+  require-keystone-middleware:
+    interface: keystone-middleware
+  require-keystone-notifications:
+    interface: keystone-notifications
+  require-kratos-info:
+    interface: kratos_info
+  require-kube-control:
+    interface: kube-control
+  require-kube-dns:
+    interface: kube-dns
+  require-kubeflow-dashboard-links:
+    interface: kubeflow_dashboard_links
+  require-kubernetes-cni:
+    interface: kubernetes-cni
+  require-kubernetes-info:
+    interface: kubernetes-info
+  require-landscape-hosted:
+    interface: landscape-hosted
+  require-ldap:
+    interface: ldap
+  require-livepatch-pro-airgapped-server:
+    interface: livepatch-pro-airgapped-server
+  require-lldp:
+    interface: lldp
+  require-loadbalancer:
+    interface: loadbalancer
+  require-local-monitors:
+    interface: local-monitors
+  require-login-ui-endpoints:
+    interface: login_ui_endpoints
+  require-logs:
+    interface: logs
+  require-logstash-client:
+    interface: logstash-client
+  require-loki-push-api:
+    interface: loki_push_api
+  require-lte-core:
+    interface: lte-core
+  require-lxd:
+    interface: lxd
+  require-lxd-bgp:
+    interface: lxd-bgp
+  require-lxd-dns:
+    interface: lxd-dns
+  require-lxd-https:
+    interface: lxd-https
+  require-lxd-metrics:
+    interface: lxd-metrics
+  require-magma-orchestrator:
+    interface: magma-orchestrator
+  require-manila-plugin:
+    interface: manila-plugin
+  require-matrix-auth:
+    interface: matrix_auth
+  require-memcache:
+    interface: memcache
+  require-midonet:
+    interface: midonet
+  require-mongodb:
+    interface: mongodb
+  require-mongodb-client:
+    interface: mongodb_client
+  require-monitor:
+    interface: monitor
+  require-monitors:
+    interface: monitors
+  require-mount:
+    interface: mount
+  require-munin-node:
+    interface: munin-node
+  require-mysql:
+    interface: mysql
+  require-mysql-async:
+    interface: mysql_async
+  require-mysql-async-replication:
+    interface: mysql-async-replication
+  require-mysql-client:
+    interface: mysql_client
+  require-mysql-monitor:
+    interface: mysql-monitor
+  require-mysql-root:
+    interface: mysql-root
+  require-mysql-router:
+    interface: mysql-router
+  require-mysql-shared:
+    interface: mysql-shared
+  require-nats:
+    interface: nats
+  require-nedge:
+    interface: nedge
+  require-neutron-api:
+    interface: neutron-api
+  require-neutron-load-balancer:
+    interface: neutron-load-balancer
+  require-neutron-plugin:
+    interface: neutron-plugin
+  require-neutron-plugin-api:
+    interface: neutron-plugin-api
+  require-neutron-plugin-api-subordinate:
+    interface: neutron-plugin-api-subordinate
+  require-nginx-route:
+    interface: nginx-route
+  require-nova:
+    interface: nova
+  require-nova-ceilometer:
+    interface: nova-ceilometer
+  require-nova-cell:
+    interface: nova-cell
+  require-nova-compute:
+    interface: nova-compute
+  require-nova-vgpu:
+    interface: nova-vgpu
+  require-nova-vmware:
+    interface: nova-vmware
+  require-nrpe:
+    interface: nrpe
+  require-nrpe-external-master:
+    interface: nrpe-external-master
+  require-ntp:
+    interface: ntp
+  require-oathkeeper-info:
+    interface: oathkeeper_info
+  require-oauth:
+    interface: oauth
+  require-object-storage:
+    interface: object-storage
+  require-odl-controller-api:
+    interface: odl-controller-api
+  require-oidc-client:
+    interface: oidc-client
+  require-openfga:
+    interface: openfga
+  require-opensearch-client:
+    interface: opensearch_client
+  require-openstack-integration:
+    interface: openstack-integration
+  require-openstack-loadbalancer:
+    interface: openstack-loadbalancer
+  require-ovsdb:
+    interface: ovsdb
+  require-ovsdb-cluster:
+    interface: ovsdb-cluster
+  require-ovsdb-cms:
+    interface: ovsdb-cms
+  require-ovsdb-manager:
+    interface: ovsdb-manager
+  require-ovsdb-subordinate:
+    interface: ovsdb-subordinate
+  require-pacemaker-remote:
+    interface: pacemaker-remote
+  require-parca-scrape:
+    interface: parca_scrape
+  require-parca-store:
+    interface: parca_store
+  require-peer-cluster:
+    interface: peer_cluster
+  require-pgsql:
+    interface: pgsql
+  require-placement:
+    interface: placement
+  require-pod-defaults:
+    interface: pod-defaults
+  require-postfix-metrics:
+    interface: postfix-metrics
+  require-postgresql-async:
+    interface: postgresql_async
+  require-postgresql-client:
+    interface: postgresql_client
+  require-prolog-epilog:
+    interface: prolog-epilog
+  require-prometheus:
+    interface: prometheus
+  require-prometheus-manual:
+    interface: prometheus-manual
+  require-prometheus-remote-write:
+    interface: prometheus_remote_write
+  require-prometheus-rules:
+    interface: prometheus-rules
+  require-prometheus-scrape:
+    interface: prometheus_scrape
+  require-public-address:
+    interface: public-address
+  require-quantum:
+    interface: quantum
+  require-rabbitmq:
+    interface: rabbitmq
+  require-radosgw-multisite:
+    interface: radosgw-multisite
+  require-radosgw-user:
+    interface: radosgw-user
+  require-ranger-client:
+    interface: ranger_client
+  require-redis:
+    interface: redis
+  require-register-application:
+    interface: register-application
+  require-rest:
+    interface: rest
+  require-s3:
+    interface: s3
+  require-saml:
+    interface: saml
+  require-script-provider:
+    interface: script-provider
+  require-sdcore-config:
+    interface: sdcore_config
+  require-sdn-plugin:
+    interface: sdn-plugin
+  require-secrets:
+    interface: secrets
+  require-sentry-metrics:
+    interface: sentry-metrics
+  require-service-control:
+    interface: service-control
+  require-service-mesh:
+    interface: service-mesh
+  require-shards:
+    interface: shards
+  require-slurmd:
+    interface: slurmd
+  require-slurmdbd:
+    interface: slurmdbd
+  require-slurmrestd:
+    interface: slurmrestd
+  require-smtp:
+    interface: smtp
+  require-squid-auth-helper:
+    interface: squid-auth-helper
+  require-ssl-termination:
+    interface: ssl-termination
+  require-statistics:
+    interface: statistics
+  require-stun-server:
+    interface: stun-server
+  require-swift:
+    interface: swift
+  require-swift-global-cluster:
+    interface: swift-global-cluster
+  require-swift-gw:
+    interface: swift-gw
+  require-swift-proxy:
+    interface: swift-proxy
+  require-syslog:
+    interface: syslog
+  require-telegraf-exec:
+    interface: telegraf-exec
+  require-temporal:
+    interface: temporal
+  require-thruk-agent:
+    interface: thruk-agent
+  require-tls-certificates:
+    interface: tls-certificates
+  require-tokens:
+    interface: tokens
+  require-tracing:
+    interface: tracing
+  require-traefik-route:
+    interface: traefik_route
+  require-trino-client:
+    interface: trino_client
+  require-ubuntu:
+    interface: ubuntu
+  require-udldap-userdata:
+    interface: udldap-userdata
+  require-untrusted-container-runtime:
+    interface: untrusted-container-runtime
+  require-user-group:
+    interface: user-group
+  require-vault-autounseal:
+    interface: vault-autounseal
+  require-vault-kv:
+    interface: vault-kv
+  require-vsd-rest-api:
+    interface: vsd-rest-api
+  require-vsphere-integration:
+    interface: vsphere-integration
+  require-web-publish:
+    interface: web-publish
+  require-websso-fid-service-provider:
+    interface: websso-fid-service-provider
+  require-websso-trusted-dashboard:
+    interface: websso-trusted-dashboard
+  require-xlc-compiler:
+    interface: xlc-compiler
+  require-zookeeper:
+    interface: zookeeper
+  require-zuul:
+    interface: zuul

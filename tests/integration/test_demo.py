@@ -52,7 +52,7 @@ async def test_ingress(ops_test, any_charm, run_action):
             config={"src-overwrite": json.dumps(any_charm_src_overwrite)},
         ),
     )
-    await ops_test.model.add_relation(any_app_name, "ingress:ingress")
+    await ops_test.model.add_relation(f"{any_app_name}:ingress", "ingress:ingress")
     await ops_test.model.wait_for_idle(status="active")
 
     await run_action(
