@@ -22,6 +22,7 @@ jobs:
           credentials: ${{ secrets.CHARMHUB_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           channel: latest/beta
+          destructive-mode: false
 
   publish-any-charm-arm64:
     name: Publish any-charm arm64
@@ -36,6 +37,7 @@ jobs:
           credentials: ${{ secrets.CHARMHUB_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           channel: latest/beta
+          destructive-mode: false
 
   publish-any-charm-k8s:
     name: Publish any-charm-k8s
@@ -62,6 +64,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           channel: latest/beta
           tag-prefix: any-charm-k8s
+          destructive-mode: false
 
   publish-any-charm-k8s-arm64:
     name: Publish any-charm-k8s arm64
@@ -88,3 +91,4 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           channel: latest/beta
           tag-prefix: any-charm-k8s
+          destructive-mode: false
