@@ -370,8 +370,6 @@ provides:
     interface: odl-controller-api
   provide-oidc-client:
     interface: oidc-client
-  provide-opencti-connector:
-    interface: opencti-connector
   provide-openfga:
     interface: openfga
   provide-opensearch-client:
