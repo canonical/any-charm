@@ -1068,3 +1068,5 @@ requires:
     interface: zookeeper
   require-zuul:
     interface: zuul
+  require-haproxy-route-tcp:
+    interface: haproxy-route-tcp
