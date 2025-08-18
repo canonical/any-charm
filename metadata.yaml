@@ -118,6 +118,8 @@ provides:
     interface: dex-oidc-config
   provide-dns-record:
     interface: dns_record
+  provide-dns-transfer:
+    interface: dns_transfer
   provide-docker-registry:
     interface: docker-registry
   provide-dockerhost:
@@ -656,6 +658,8 @@ requires:
     interface: dex-oidc-config
   require-dns-record:
     interface: dns_record
+  require-dns-transfer:
+    interface: dns_transfer
   require-docker-registry:
     interface: docker-registry
   require-dockerhost:
