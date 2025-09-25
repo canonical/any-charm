@@ -58,5 +58,7 @@ jobs:
         with:
           juju-channel: 3/stable
           provider: lxd
+      - name: Install build dependencies
+        run: apt-get install -y cargo pkg-config
       - name: Run integration tests
         run: tox -e integration -- -k ${{ matrix.module }}
