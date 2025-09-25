@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 @pytest.mark.abort_on_fail
-async def test_install_python_dependencies(ops_test, any_charm, run_rpc):
+async def test_install_python_dependencies(ops_test, any_charm, run_rpc, arch):
     any_charm_script = textwrap.dedent(
         """\
     from any_charm_base import AnyCharmBase
@@ -41,6 +41,7 @@ async def test_install_python_dependencies(ops_test, any_charm, run_rpc):
             "src-overwrite": json.dumps({"any_charm.py": any_charm_script}),
         },
         series="jammy",
+        constraints={"arch": arch},
     ),
     await ops_test.model.wait_for_idle(status="active")
 
