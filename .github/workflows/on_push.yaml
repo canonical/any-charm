@@ -45,6 +45,42 @@ jobs:
           channel: latest/beta
           destructive-mode: false
 
+  publish-any-charm-ppc64le:
+    name: Publish any-charm ppc64le
+    runs-on: [self-hosted, ppc64le]
+    needs: [ run-tests ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - uses: canonical/setup-lxd@main
+        with:
+          channel: 5.21/stable
+      - name: Upload Charm to Charmhub
+        uses: canonical/charming-actions/upload-charm@2.7.0
+        with:
+          credentials: ${{ secrets.CHARMHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          channel: latest/beta
+          destructive-mode: false
+
+  publish-any-charm-s390x:
+    name: Publish any-charm s390x
+    runs-on: [self-hosted, s390x]
+    needs: [ run-tests ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - uses: canonical/setup-lxd@main
+        with:
+          channel: 5.21/stable
+      - name: Upload Charm to Charmhub
+        uses: canonical/charming-actions/upload-charm@2.7.0
+        with:
+          credentials: ${{ secrets.CHARMHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          channel: latest/beta
+          destructive-mode: false
+
   publish-any-charm-k8s:
     name: Publish any-charm-k8s
     runs-on: ubuntu-24.04
