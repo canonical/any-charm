@@ -1,4 +1,4 @@
-ops==3.3.0
+ops==3.3.1
 charmhelpers==1.2.1
 setuptools==80.9.0
 packaging==25.0
