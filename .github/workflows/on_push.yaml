@@ -9,10 +9,28 @@ jobs:
     name: Run Tests
     uses: ./.github/workflows/ci.yaml
 
-  publish-any-charm:
-    name: Publish any-charm
+  publish-any-charm-amd64-22-04:
+    name: Publish any-charm amd64 Ubuntu 22.04
+    runs-on: ubuntu-22.04
+    needs: [run-tests]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - uses: canonical/setup-lxd@main
+        with:
+          channel: 5.21/stable
+      - name: Upload Charm to Charmhub
+        uses: canonical/charming-actions/upload-charm@2.7.0
+        with:
+          credentials: ${{ secrets.CHARMHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          channel: latest/beta
+          destructive-mode: false
+
+  publish-any-charm-amd64-24-04:
+    name: Publish any-charm amd64 Ubuntu 24.04
     runs-on: ubuntu-24.04
-    needs: [ run-tests ]
+    needs: [run-tests]
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -27,10 +45,10 @@ jobs:
           channel: latest/beta
           destructive-mode: false
 
-  publish-any-charm-arm64:
-    name: Publish any-charm arm64
+  publish-any-charm-arm64-22-04:
+    name: Publish any-charm arm64 Ubuntu 22.04
     runs-on: [arm64, jammy]
-    needs: [ run-tests ]
+    needs: [run-tests]
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -45,10 +63,10 @@ jobs:
           channel: latest/beta
           destructive-mode: false
 
-  publish-any-charm-ppc64le:
-    name: Publish any-charm ppc64le
-    runs-on: [self-hosted, ppc64le]
-    needs: [ run-tests ]
+  publish-any-charm-arm64-24-04:
+    name: Publish any-charm arm64 Ubuntu 24.04
+    runs-on: [arm64, noble]
+    needs: [run-tests]
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -63,10 +81,10 @@ jobs:
           channel: latest/beta
           destructive-mode: false
 
-  publish-any-charm-s390x:
-    name: Publish any-charm s390x
-    runs-on: [self-hosted, s390x]
-    needs: [ run-tests ]
+  publish-any-charm-ppc64el-22-04:
+    name: Publish any-charm ppc64el Ubuntu 22.04
+    runs-on: [self-hosted, ppc64el, jammy]
+    needs: [run-tests]
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -81,8 +99,93 @@ jobs:
           channel: latest/beta
           destructive-mode: false
 
-  publish-any-charm-k8s:
-    name: Publish any-charm-k8s
+  publish-any-charm-ppc64el-24-04:
+    name: Publish any-charm ppc64el Ubuntu 24.04
+    runs-on: [self-hosted, ppc64el, noble]
+    needs: [run-tests]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - uses: canonical/setup-lxd@main
+        with:
+          channel: 5.21/stable
+      - name: Upload Charm to Charmhub
+        uses: canonical/charming-actions/upload-charm@2.7.0
+        with:
+          credentials: ${{ secrets.CHARMHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          channel: latest/beta
+          destructive-mode: false
+
+  publish-any-charm-s390x-22-04:
+    name: Publish any-charm s390x Ubuntu 22.04
+    runs-on: [self-hosted, s390x, jammy]
+    needs: [run-tests]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - uses: canonical/setup-lxd@main
+        with:
+          channel: 5.21/stable
+      - name: Upload Charm to Charmhub
+        uses: canonical/charming-actions/upload-charm@2.7.0
+        with:
+          credentials: ${{ secrets.CHARMHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          channel: latest/beta
+          destructive-mode: false
+
+  publish-any-charm-s390x-24-04:
+    name: Publish any-charm s390x Ubuntu 24.04
+    runs-on: [self-hosted, s390x, noble]
+    needs: [run-tests]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - uses: canonical/setup-lxd@main
+        with:
+          channel: 5.21/stable
+      - name: Upload Charm to Charmhub
+        uses: canonical/charming-actions/upload-charm@2.7.0
+        with:
+          credentials: ${{ secrets.CHARMHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          channel: latest/beta
+          destructive-mode: false
+
+
+  publish-any-charm-k8s-amd64-22-04:
+    name: Publish any-charm-k8s amd64 Ubuntu 22.04
+    runs-on: ubuntu-22.04
+    needs: [run-tests]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - uses: canonical/setup-lxd@main
+        with:
+          channel: 5.21/stable
+      - name: Update metadata.yaml
+        run: |
+          yq eval '.name = "any-charm-k8s"' --inplace metadata.yaml
+          yq eval '.containers = {"any": {"resource": "any-image"}}' --inplace metadata.yaml
+          yq eval '.resources = {
+            "any-image": {
+              "type": "oci-image", 
+              "description": "Any OCI image", 
+              "upstream-source": "ubuntu:latest"
+            }
+          }' --inplace metadata.yaml
+      - name: Upload Charm to Charmhub
+        uses: canonical/charming-actions/upload-charm@2.7.0
+        with:
+          credentials: ${{ secrets.CHARMHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          channel: latest/beta
+          tag-prefix: any-charm-k8s
+          destructive-mode: false
+
+  publish-any-charm-k8s-amd64-24-04:
+    name: Publish any-charm-k8s amd64 Ubuntu 24.04
     runs-on: ubuntu-24.04
     needs: [ run-tests ]
     steps:
@@ -111,9 +214,39 @@ jobs:
           tag-prefix: any-charm-k8s
           destructive-mode: false
 
-  publish-any-charm-k8s-arm64:
-    name: Publish any-charm-k8s arm64
+  publish-any-charm-k8s-arm64-22-04:
+    name: Publish any-charm-k8s arm64 Ubuntu 22.04
     runs-on: [arm64, jammy]
+    needs: [ run-tests ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - uses: canonical/setup-lxd@main
+        with:
+          channel: 5.21/stable
+      - name: Update metadata.yaml
+        run: |
+          yq eval '.name = "any-charm-k8s"' --inplace metadata.yaml
+          yq eval '.containers = {"any": {"resource": "any-image"}}' --inplace metadata.yaml
+          yq eval '.resources = {
+            "any-image": {
+              "type": "oci-image",
+              "description": "Any OCI image",
+              "upstream-source": "ubuntu:latest"
+            }
+          }' --inplace metadata.yaml
+      - name: Upload Charm to Charmhub
+        uses: canonical/charming-actions/upload-charm@2.7.0
+        with:
+          credentials: ${{ secrets.CHARMHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          channel: latest/beta
+          tag-prefix: any-charm-k8s
+          destructive-mode: false
+
+  publish-any-charm-k8s-arm64-24-04:
+    name: Publish any-charm-k8s arm64 Ubuntu 24.04
+    runs-on: [arm64, noble]
     needs: [ run-tests ]
     steps:
       - name: Checkout
