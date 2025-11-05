@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 @pytest.fixture(name="series")
-async def series_fixture():
+def series_fixture():
     """Series for deploying any-charm."""
     series = subprocess.check_output(["lsb_release", "-cs"]).strip().decode("utf-8")
     return series
