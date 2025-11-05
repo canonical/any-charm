@@ -31,7 +31,7 @@ jobs:
     strategy:
       matrix:
         ubuntu-version: ["22.04", "24.04"]
-        module: [ test_charm, test_demo, test_packages ]
+        module: [test_charm, test_demo, test_packages]
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -46,7 +46,8 @@ jobs:
 
   integration-test-lxd:
     name: Integration tests (LXD) ${{ matrix.arch }} Ubuntu ${{ matrix.ubuntu-version }}
-    runs-on: [self-hosted, "${{ matrix.arch }}", "${{ matrix.ubuntu-codename }}"]
+    runs-on:
+      [self-hosted, "${{ matrix.arch }}", "${{ matrix.ubuntu-codename }}"]
     strategy:
       matrix:
         arch: [s390x, arm64, ppc64le, amd64]
@@ -69,3 +70,6 @@ jobs:
         run: sudo apt-get install -y cargo pkg-config
       - name: Run integration tests
         run: tox -e integration -- -k ${{ matrix.module }}
+      - name: Setup tmate session
+        if: ${{ failure() }}
+        uses: canonical/action-tmate@main
