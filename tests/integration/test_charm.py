@@ -4,6 +4,7 @@
 import asyncio
 import json
 import logging
+import subprocess
 import textwrap
 
 import pytest
@@ -11,15 +12,22 @@ import pytest
 logger = logging.getLogger(__name__)
 
 
+@pytest.fixture(name="series")
+async def series_fixture():
+    """Series for deploying any-charm."""
+    series = subprocess.check_output(["lsb_release", "-cs"]).strip().decode("utf-8")
+    return series
+
+
 @pytest.mark.abort_on_fail
-async def test_deploy(ops_test, any_charm, arch):
+async def test_deploy(ops_test, any_charm, arch, series):
     """Build the charm-under-test and deploy it."""
     await asyncio.gather(
         ops_test.model.deploy(
-            any_charm, application_name="this", series="jammy", constraints={"arch": arch}
+            any_charm, application_name="this", series=series, constraints={"arch": arch}
         ),
         ops_test.model.deploy(
-            any_charm, application_name="other", series="jammy", constraints={"arch": arch}
+            any_charm, application_name="other", series=series, constraints={"arch": arch}
         ),
     )
     await ops_test.model.wait_for_idle(status="active")
