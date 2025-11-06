@@ -4,19 +4,11 @@
 import asyncio
 import json
 import logging
-import subprocess
 import textwrap
 
 import pytest
 
 logger = logging.getLogger(__name__)
-
-
-@pytest.fixture(name="series")
-def series_fixture():
-    """Series for deploying any-charm."""
-    series = subprocess.check_output(["lsb_release", "-cs"]).strip().decode("utf-8")
-    return series
 
 
 @pytest.mark.abort_on_fail

@@ -3,6 +3,7 @@
 
 import json
 import platform
+import subprocess
 
 import pytest
 import pytest_asyncio
@@ -47,3 +48,9 @@ def arch_fixture():
     if arch in ("s390x",):
         return "s390x"
     raise NotImplementedError(f"Unimplemented arch {arch}")
+
+
+@pytest.fixture(name="series")
+def series_fixture():
+    """Series for deploying any-charm."""
+    return subprocess.check_output(["lsb_release", "-cs"]).strip().decode("utf-8")
