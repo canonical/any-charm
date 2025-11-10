@@ -48,7 +48,7 @@ async def any_charm(ops_test: OpsTest, series: str):
     any_charm_build_dir = any_charm_path.parent
     any_charm_matching_series = list(any_charm_build_dir.rglob(f"*{series}*.charm"))
     assert any_charm_matching_series is not None, f"No build found for series {series}"
-    return any_charm_matching_series
+    return any_charm_matching_series[0]
 
 
 @pytest.fixture(scope="module", name="arch")
