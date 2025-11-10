@@ -30,13 +30,13 @@ def run_rpc(run_action):
     return _run_rpc
 
 
-@pytest.fixture(name="codename")
+@pytest.fixture(name="codename", scope="module")
 def codename_fixture():
     """Series codename for deploying any-charm."""
     return subprocess.check_output(["lsb_release", "-cs"]).strip().decode("utf-8")
 
 
-@pytest.fixture(name="series")
+@pytest.fixture(name="series", scope="module")
 def series_fixture():
     """Series version for deploying any-charm."""
     return subprocess.check_output(["lsb_release", "-rs"]).strip().decode("utf-8")
