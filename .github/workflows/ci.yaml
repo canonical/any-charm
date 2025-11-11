@@ -58,6 +58,11 @@ jobs:
             ubuntu-codename: jammy
           - ubuntu-version: "24.04"
             ubuntu-codename: noble
+        exclude:
+          - arch: s390x
+            ubuntu-version: "22.04"
+          - arch: ppc64le
+            ubuntu-version: "22.04"
     steps:
       - name: Checkout
         uses: actions/checkout@v5
