@@ -3,6 +3,7 @@
 
 import json
 import platform
+import subprocess
 
 import pytest
 import pytest_asyncio
@@ -29,9 +30,25 @@ def run_rpc(run_action):
     return _run_rpc
 
 
+@pytest.fixture(name="codename", scope="module")
+def codename_fixture():
+    """Series codename for deploying any-charm."""
+    return subprocess.check_output(["lsb_release", "-cs"]).strip().decode("utf-8")
+
+
+@pytest.fixture(name="series", scope="module")
+def series_fixture():
+    """Series version for deploying any-charm."""
+    return subprocess.check_output(["lsb_release", "-rs"]).strip().decode("utf-8")
+
+
 @pytest_asyncio.fixture(scope="module")
-async def any_charm(ops_test: OpsTest):
-    return await ops_test.build_charm(".")
+async def any_charm(ops_test: OpsTest, series: str):
+    any_charm_path = await ops_test.build_charm(".")
+    any_charm_build_dir = any_charm_path.parent
+    any_charm_matching_series = list(any_charm_build_dir.rglob(f"*{series}*.charm"))
+    assert any_charm_matching_series is not None, f"No build found for series {series}"
+    return any_charm_matching_series[0]
 
 
 @pytest.fixture(scope="module", name="arch")

@@ -10,63 +10,36 @@ jobs:
     uses: ./.github/workflows/ci.yaml
 
   publish-any-charm:
-    name: Publish any-charm
-    runs-on: ubuntu-24.04
-    needs: [ run-tests ]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-      - uses: canonical/setup-lxd@main
-        with:
-          channel: 5.21/stable
-      - name: Upload Charm to Charmhub
-        uses: canonical/charming-actions/upload-charm@2.7.0
-        with:
-          credentials: ${{ secrets.CHARMHUB_TOKEN }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          channel: latest/beta
-          destructive-mode: false
-
-  publish-any-charm-arm64:
-    name: Publish any-charm arm64
-    runs-on: [arm64, jammy]
-    needs: [ run-tests ]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-      - uses: canonical/setup-lxd@main
-        with:
-          channel: 5.21/stable
-      - name: Upload Charm to Charmhub
-        uses: canonical/charming-actions/upload-charm@2.7.0
-        with:
-          credentials: ${{ secrets.CHARMHUB_TOKEN }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          channel: latest/beta
-          destructive-mode: false
-
-  publish-any-charm-ppc64le:
-    name: Publish any-charm ppc64le
-    runs-on: [self-hosted, ppc64le]
-    needs: [ run-tests ]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-      - uses: canonical/setup-lxd@main
-        with:
-          channel: 5.21/stable
-      - name: Upload Charm to Charmhub
-        uses: canonical/charming-actions/upload-charm@2.7.0
-        with:
-          credentials: ${{ secrets.CHARMHUB_TOKEN }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          channel: latest/beta
-          destructive-mode: false
-
-  publish-any-charm-s390x:
-    name: Publish any-charm s390x
-    runs-on: [self-hosted, s390x]
-    needs: [ run-tests ]
+    name: Publish any-charm ${{ matrix.arch }} Ubuntu ${{ matrix.ubuntu-version }}
+    runs-on: ${{ matrix.runs-on }}
+    needs: [run-tests]
+    strategy:
+      matrix:
+        include:
+          - arch: amd64
+            ubuntu-version: "22.04"
+            runs-on: ubuntu-22.04
+          - arch: arm64
+            ubuntu-version: "22.04"
+            runs-on: [self-hosted, arm64, jammy]
+          - arch: ppc64el
+            ubuntu-version: "22.04"
+            runs-on: [self-hosted, ppc64el, jammy]
+          - arch: s390x
+            ubuntu-version: "22.04"
+            runs-on: [self-hosted, s390x, jammy]
+          - arch: amd64
+            ubuntu-version: "24.04"
+            runs-on: ubuntu-24.04
+          - arch: arm64
+            ubuntu-version: "24.04"
+            runs-on: [self-hosted, arm64, noble]
+          - arch: ppc64el
+            ubuntu-version: "24.04"
+            runs-on: [self-hosted, ppc64el, noble]
+          - arch: s390x
+            ubuntu-version: "24.04"
+            runs-on: [self-hosted, s390x, noble]
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -82,39 +55,24 @@ jobs:
           destructive-mode: false
 
   publish-any-charm-k8s:
-    name: Publish any-charm-k8s
-    runs-on: ubuntu-24.04
-    needs: [ run-tests ]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-      - uses: canonical/setup-lxd@main
-        with:
-          channel: 5.21/stable
-      - name: Update metadata.yaml
-        run: |
-          yq eval '.name = "any-charm-k8s"' --inplace metadata.yaml
-          yq eval '.containers = {"any": {"resource": "any-image"}}' --inplace metadata.yaml
-          yq eval '.resources = {
-            "any-image": {
-              "type": "oci-image", 
-              "description": "Any OCI image", 
-              "upstream-source": "ubuntu:latest"
-            }
-          }' --inplace metadata.yaml
-      - name: Upload Charm to Charmhub
-        uses: canonical/charming-actions/upload-charm@2.7.0
-        with:
-          credentials: ${{ secrets.CHARMHUB_TOKEN }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          channel: latest/beta
-          tag-prefix: any-charm-k8s
-          destructive-mode: false
-
-  publish-any-charm-k8s-arm64:
-    name: Publish any-charm-k8s arm64
-    runs-on: [arm64, jammy]
-    needs: [ run-tests ]
+    name: Publish any-charm-k8s ${{ matrix.arch }} Ubuntu ${{ matrix.ubuntu-version }}
+    runs-on: ${{ matrix.runs-on }}
+    needs: [run-tests]
+    strategy:
+      matrix:
+        include:
+          - arch: amd64
+            ubuntu-version: "22.04"
+            runs-on: ubuntu-22.04
+          - arch: arm64
+            ubuntu-version: "22.04"
+            runs-on: [self-hosted, arm64, jammy]
+          - arch: amd64
+            ubuntu-version: "24.04"
+            runs-on: ubuntu-24.04
+          - arch: arm64
+            ubuntu-version: "24.04"
+            runs-on: [self-hosted, arm64, noble]
     steps:
       - name: Checkout
         uses: actions/checkout@v5

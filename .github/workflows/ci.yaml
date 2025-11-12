@@ -26,11 +26,12 @@ jobs:
         run: tox -e unit
 
   integration-test-microk8s:
-    name: Integration tests (microk8s)
-    runs-on: ubuntu-latest
+    name: Integration tests (microk8s) ${{ matrix.ubuntu-version }}
+    runs-on: ubuntu-${{ matrix.ubuntu-version }}
     strategy:
       matrix:
-        module: [ test_charm, test_demo, test_packages ]
+        ubuntu-version: ["22.04", "24.04"]
+        module: [test_charm, test_demo, test_packages]
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -44,12 +45,24 @@ jobs:
         run: tox -e integration -- -k ${{ matrix.module }}
 
   integration-test-lxd:
-    name: Integration tests (LXD)
-    runs-on: [self-hosted, "${{ matrix.arch }}"]
+    name: Integration tests (LXD) ${{ matrix.arch }} Ubuntu ${{ matrix.ubuntu-version }}
+    runs-on:
+      [self-hosted, "${{ matrix.arch }}", "${{ matrix.ubuntu-codename }}"]
     strategy:
       matrix:
-        arch: [ s390x, arm64, ppc64le ]
-        module: [ test_charm, test_packages ]
+        arch: [s390x, arm64, ppc64le, amd64]
+        ubuntu-version: ["22.04", "24.04"]
+        module: [test_charm, test_packages]
+        include:
+          - ubuntu-version: "22.04"
+            ubuntu-codename: jammy
+          - ubuntu-version: "24.04"
+            ubuntu-codename: noble
+        exclude:
+          - arch: s390x
+            ubuntu-version: "22.04"
+          - arch: ppc64le
+            ubuntu-version: "22.04"
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -62,3 +75,6 @@ jobs:
         run: sudo apt-get install -y cargo pkg-config
       - name: Run integration tests
         run: tox -e integration -- -k ${{ matrix.module }}
+      - name: Setup tmate session
+        if: ${{ failure() }}
+        uses: canonical/action-tmate@main
