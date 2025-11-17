@@ -22,12 +22,6 @@ jobs:
           - arch: arm64
             ubuntu-version: "22.04"
             runs-on: [self-hosted, arm64, jammy]
-          - arch: ppc64el
-            ubuntu-version: "22.04"
-            runs-on: [self-hosted, ppc64el, jammy]
-          - arch: s390x
-            ubuntu-version: "22.04"
-            runs-on: [self-hosted, s390x, jammy]
           - arch: amd64
             ubuntu-version: "24.04"
             runs-on: ubuntu-24.04
