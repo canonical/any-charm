@@ -3,8 +3,7 @@
 
 name: any-charm
 description: A charm used to test other charms.
-summary:  A charm used to test other charms.
-
+summary: A charm used to test other charms.
 
 peers:
   peer-any:
@@ -158,6 +157,8 @@ provides:
     interface: generic-ip-port-user-pass
   provide-giraph:
     interface: giraph
+  provide-github-runner-image-v0:
+    interface: github_runner_image_v0
   provide-glance:
     interface: glance
   provide-glance-backend:
@@ -696,6 +697,8 @@ requires:
     interface: gcp-integration
   require-generic-ip-port-user-pass:
     interface: generic-ip-port-user-pass
+  require-github-runner-image-v0:
+    interface: github_runner_image_v0
   require-giraph:
     interface: giraph
   require-glance:
