@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-${{ matrix.ubuntu-version }}
     strategy:
       matrix:
-        ubuntu-version: ["22.04", "24.04"]
+        ubuntu-version: ["20.04", "22.04", "24.04"]
         module: [test_charm, test_demo, test_packages]
     steps:
       - name: Checkout
@@ -51,14 +51,22 @@ jobs:
     strategy:
       matrix:
         arch: [s390x, arm64, ppc64le, amd64]
-        ubuntu-version: ["22.04", "24.04"]
+        ubuntu-version: ["20.04", "22.04", "24.04"]
         module: [test_charm, test_packages]
         include:
+          - ubuntu-version: "20.04"
+            ubuntu-codename: focal
           - ubuntu-version: "22.04"
             ubuntu-codename: jammy
           - ubuntu-version: "24.04"
             ubuntu-codename: noble
         exclude:
+          - arch: s390x
+            ubuntu-version: "20.04"
+          - arch: ppc64le
+            ubuntu-version: "20.04"
+          - arch: arm64
+            ubuntu-version: "20.04"
           - arch: s390x
             ubuntu-version: "22.04"
           - arch: ppc64le

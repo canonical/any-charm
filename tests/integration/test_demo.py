@@ -11,7 +11,7 @@ import requests
 logger = logging.getLogger(__name__)
 
 
-async def test_ingress(ops_test, any_charm, run_action):
+async def test_ingress(ops_test, any_charm, run_action, codename):
     any_app_name = "any-ingress"
     ingress_lib_url = "https://github.com/canonical/nginx-ingress-integrator-operator/raw/main/lib/charms/nginx_ingress_integrator/v0/ingress.py"
     ingress_lib = requests.get(ingress_lib_url, timeout=10).text
@@ -48,7 +48,7 @@ async def test_ingress(ops_test, any_charm, run_action):
         ops_test.model.deploy(
             any_charm,
             application_name=any_app_name,
-            series="jammy",
+            series=codename,
             config={"src-overwrite": json.dumps(any_charm_src_overwrite)},
         ),
     )
