@@ -17,8 +17,7 @@ async def test_ingress(ops_test, any_charm, run_action):
     ingress_lib = requests.get(ingress_lib_url, timeout=10).text
     any_charm_src_overwrite = {
         "ingress.py": ingress_lib,
-        "any_charm.py": textwrap.dedent(
-            """\
+        "any_charm.py": textwrap.dedent("""\
         from ingress import IngressRequires
         from any_charm_base import AnyCharmBase
         class AnyCharm(AnyCharmBase):
@@ -34,8 +33,7 @@ async def test_ingress(ops_test, any_charm, run_action):
                 )
             def update_ingress(self, ingress_config):
                 self.ingress.update_config(ingress_config)
-        """
-        ),
+        """),
     }
     await asyncio.gather(
         ops_test.model.deploy(
