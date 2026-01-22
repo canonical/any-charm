@@ -26,8 +26,7 @@ async def test_deploy(ops_test, any_charm, arch, codename):
 
 
 async def test_relation_and_config(ops_test, run_action):
-    overwrite_app_charm_script = textwrap.dedent(
-        """\
+    overwrite_app_charm_script = textwrap.dedent("""\
     from any_charm_base import AnyCharmBase
 
     class AnyCharm(AnyCharmBase):
@@ -40,8 +39,7 @@ async def test_relation_and_config(ops_test, run_action):
             if self.unit.is_leader():
                 event.relation.data[self.model.app]['value'] = self.app.name
             event.relation.data[self.unit]['value'] = self.unit.name
-    """
-    )
+    """)
     for app_name in ("this", "other"):
         await ops_test.model.applications[app_name].set_config(
             {
@@ -69,15 +67,13 @@ async def test_relation_and_config(ops_test, run_action):
 
 
 async def test_overwrite_and_rpc_action(ops_test, run_action):
-    overwrite_app_charm_script = textwrap.dedent(
-        """\
+    overwrite_app_charm_script = textwrap.dedent("""\
     from any_charm_base import AnyCharmBase
     from import_test import identity
     class AnyCharm(AnyCharmBase):
         def echo(self, *args, **kwargs):
             return identity({"args": args, "kwargs": kwargs})
-    """
-    )
+    """)
     overwrite_import_test_script = "identity = lambda x: x"
     await ops_test.model.applications["this"].set_config(
         {
@@ -102,13 +98,11 @@ async def test_overwrite_and_rpc_action(ops_test, run_action):
 
 
 async def test_recovery(ops_test, run_action):
-    overwrite_app_charm_script = textwrap.dedent(
-        """\
+    overwrite_app_charm_script = textwrap.dedent("""\
     import ops
     class AnyCharm(ops.CharmBase):
         pass
-    """
-    )
+    """)
     await ops_test.model.applications["this"].set_config(
         {
             "src-overwrite": json.dumps(
