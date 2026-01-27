@@ -159,6 +159,8 @@ provides:
     interface: giraph
   provide-github-runner-image-v0:
     interface: github_runner_image_v0
+  provide-github-runner-planner-v0:
+    interface: github_runner_planner_v0
   provide-glance:
     interface: glance
   provide-glance-backend:
@@ -699,6 +701,8 @@ requires:
     interface: generic-ip-port-user-pass
   require-github-runner-image-v0:
     interface: github_runner_image_v0
+  require-github-runner-planner-v0:
+    interface: github_runner_planner_v0
   require-giraph:
     interface: giraph
   require-glance:
