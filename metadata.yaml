@@ -1081,3 +1081,5 @@ requires:
     interface: zuul
   require-haproxy-route-tcp:
     interface: haproxy-route-tcp
+  require-haproxy-route-policy:
+    interface: haproxy-route-policy
