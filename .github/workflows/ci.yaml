@@ -75,3 +75,16 @@ jobs:
         run: sudo apt-get install -y cargo pkg-config
       - name: Run integration tests
         run: tox -e integration -- -k ${{ matrix.module }}
+
+  required_status_checks:
+    name: Required Integration Test Status Checks
+    runs-on: ubuntu-latest
+    needs:
+      - integration-test-microk8s
+      - integration-test-lxd
+    if: always() && !cancelled()
+    timeout-minutes: 5
+    steps:
+      - run: |
+          [ '${{ needs.integration-test-microk8s.result }}' = 'skipped' ] || [ '${{ needs.integration-test-microk8s.result }}' = 'success' ] || (echo integration-test-microk8s failed && false)
+          [ '${{ needs.integration-test-lxd.result }}' = 'skipped' ] || [ '${{ needs.integration-test-lxd.result }}' = 'success' ] || (echo integration-test-lxd failed && false)
