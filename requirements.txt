@@ -1,7 +1,7 @@
-ops==3.7.0
+ops==3.7.1
 charmhelpers==1.2.1
 setuptools==82.0.1
 packaging==26.2
-pip==26.1.1
+pip==26.1.2
 pyyaml==6.0.3
 wheel>=0.45
