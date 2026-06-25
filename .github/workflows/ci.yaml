@@ -34,9 +34,9 @@ jobs:
         module: [test_charm, test_demo, test_packages]
         include:
           - ubuntu-version: "22.04"
-            microk8s-channel: "1.32-strict/stable"
+            microk8s-channel: "1.35-strict/stable"
           - ubuntu-version: "24.04"
-            microk8s-channel: "1.33-strict/stable"
+            microk8s-channel: "1.35-strict/stable"
     steps:
       - name: Checkout
         uses: actions/checkout@v7
