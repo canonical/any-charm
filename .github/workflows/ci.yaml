@@ -32,11 +32,6 @@ jobs:
       matrix:
         ubuntu-version: ["22.04", "24.04"]
         module: [test_charm, test_demo, test_packages]
-        include:
-          - ubuntu-version: "22.04"
-            microk8s-channel: "1.35-strict/stable"
-          - ubuntu-version: "24.04"
-            microk8s-channel: "1.35-strict/stable"
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -45,7 +40,7 @@ jobs:
         with:
           juju-channel: 3.6/stable
           provider: microk8s
-          channel: ${{ matrix.microk8s-channel }}
+          channel: 1.35-strict/stable
       - name: Run integration tests
         run: tox -e integration -- -k ${{ matrix.module }}
 
