@@ -39,7 +39,7 @@ jobs:
           runs-on: [self-hosted, s390x, noble]
     steps:
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
     - uses: canonical/setup-lxd@main
       with:
         channel: 5.21/stable
@@ -75,7 +75,7 @@ jobs:
           runs-on: [self-hosted, arm64, noble]
     steps:
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
     - uses: canonical/setup-lxd@main
       with:
         channel: 5.21/stable

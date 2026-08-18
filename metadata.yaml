@@ -111,6 +111,8 @@ provides:
     interface: db
   provide-db2:
     interface: db2
+  provide-debug-ssh:
+    interface: debug-ssh
   provide-designate:
     interface: designate
   provide-dex-oidc-config:
