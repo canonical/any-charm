@@ -22,8 +22,8 @@ run "basic_deploy" {
   }
 
   assert {
-    condition     = output.provides.value.endpoint == "provide-aar"
-    error_message = "any-charm module should provide 'provides.value' output"
+    condition     = output.provides.provide_aar.endpoint == "provide-aar"
+    error_message = "any-charm module should provide 'provides.provide_aar' output"
   }
 
   assert {
@@ -37,8 +37,8 @@ run "basic_deploy" {
   }
 
   assert {
-    condition     = output.requires.value.endpoint == "dns-record"
-    error_message = "any-charm module should provide 'requires.value' output"
+    condition     = output.requires.dns_record.endpoint == "dns-record"
+    error_message = "any-charm module should provide 'requires.dns_record' output"
   }
 
   assert {
