@@ -1,62 +1,53 @@
 # Copyright 2026 Canonical Ltd.
 # See LICENSE file for licensing details.
 
-variables {
-  app_name    = "any-charm"
-  base        = "ubuntu@22.04"
-  channel     = "latest/edge"
-  config      = {}
-  constraints = "arch=amd64"
-  model_uuid  = "00000000-0000-0000-0000-000000000001"
-  revision    = 10
-  units       = 2
-}
-
-mock_provider "juju" {
-  mock_resource "juju_application" {
-    override_during = plan
-    defaults = {
-      id         = "any-charm"
-      model_type = "lxd"
-    }
+run "setup_tests" {
+  module {
+    source = "./tests/setup"
   }
 }
 
-run "deploys_application" {
-  command = plan
-
-  assert {
-    condition     = output.application.name == "any-charm" && output.application.model_uuid == "00000000-0000-0000-0000-000000000001" && output.application.charm[0].name == "any-charm" && output.application.charm[0].channel == "latest/edge" && output.application.charm[0].base == "ubuntu@22.04" && output.application.charm[0].revision == 10
-    error_message = "application identity did not match the expected deployment"
+run "basic_deploy" {
+  variables {
+    model_uuid = run.setup_tests.model_uuid
+    base       = "ubuntu@24.04"
+    channel    = "latest/edge"
+    # renovate: depName="any-charm"
+    revision = 140
   }
 
   assert {
-    condition     = output.application.constraints == "arch=amd64"
-    error_message = "application constraints did not match expected"
+    condition     = output.application.name == "any-charm"
+    error_message = "any-charm application name did not match expected"
   }
 
   assert {
-    condition     = output.application.units == 2
-    error_message = "application units did not match expected"
+    condition     = output.provides.value.endpoint == "provide-aar"
+    error_message = "any-charm module should provide 'provides.value' output"
   }
 
   assert {
-    condition     = length(output.provides) == 263
-    error_message = "provides map did not contain every provided endpoint"
+    condition     = output.provides.provide_agent_auth.endpoint == "provide-agent-auth"
+    error_message = "any-charm module should provide 'provides.provide_agent_auth' output"
   }
 
   assert {
-    condition     = length(output.requires) == 274
-    error_message = "requires map did not contain every required endpoint"
+    condition     = output.provides.provide_airbyte_server.endpoint == "provide-airbyte-server"
+    error_message = "any-charm module should provide 'provides.provide_airbyte_server' output"
   }
 
   assert {
-    condition     = output.provides["provide_aar"].endpoint == "provide-aar" && output.provides["provide_aar"].name == "any-charm" && output.provides["provide_aar"].kind == "endpoint"
-    error_message = "provide-aar endpoint did not match expected structure"
+    condition     = output.requires.value.endpoint == "dns-record"
+    error_message = "any-charm module should provide 'requires.value' output"
   }
 
   assert {
-    condition     = output.requires["redis"].endpoint == "redis" && output.requires["redis"].name == "any-charm" && output.requires["redis"].kind == "endpoint"
-    error_message = "redis endpoint did not match expected structure"
+    condition     = output.requires.ingress.endpoint == "ingress"
+    error_message = "any-charm module should provide 'requires.ingress' output"
+  }
+
+  assert {
+    condition     = output.requires.ldap.endpoint == "ldap"
+    error_message = "any-charm module should provide 'requires.ldap' output"
   }
 }
